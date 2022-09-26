@@ -1,2 +1,2 @@
 # sb_microservice
-This reposotory is to learn microservice
+This repository for customer service.
