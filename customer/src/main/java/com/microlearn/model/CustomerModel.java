@@ -1,21 +1,16 @@
 package com.microlearn.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import java.util.Objects;
 
+@JsonFilter("CustomerFilter")
 public class CustomerModel {
     private String customerId;
     private String firstName;
     private String lastName;
     private String emailId;
     private String mobileNumber;
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
 
     public CustomerModel(String customerId, String firstName, String lastName, String emailId, String mobileNumber) {
         super();
@@ -24,6 +19,14 @@ public class CustomerModel {
         this.lastName = lastName;
         this.emailId = emailId;
         this.mobileNumber = mobileNumber;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {

@@ -27,6 +27,6 @@ public class StoreCustomerRepository {
 
     public CustomerModel getCustomerById(String customerId)
     {
-         return customerList.stream().filter(customer -> customer.getCustomerId().equalsIgnoreCase(customerId)).toList().get(0);
+         return customerList.stream().filter(customer -> customer.getCustomerId().equalsIgnoreCase(customerId)).findAny().orElse(null);
     }
 }
