@@ -72,15 +72,7 @@
   </path>
 
 
-  <!-- detect if conditional sections should be executed -->
-  <condition property="has.xpay.xsd.files">
-    <resourcecount refid="xpay.xsd.files" when="greater" count="0" />
-  </condition>
-  <condition property="has.test">
-    <resourcecount count="0" when="greater">
-      <fileset dir="${src.test}" includes="**/*.java" />
-    </resourcecount>
-  </condition>
+
   <condition property="should.zip.mnts">
     <!-- MNT files should be zipped if the following conditions are true: -->
     <!-- a. MNT files exist -->
