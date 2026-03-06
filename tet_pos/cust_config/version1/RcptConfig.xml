@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReceiptDefinitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="RcptConfig.xsd">
+
+  <sections>
+  	 <section name="footer_cust_copy">
+      <!--<sectionref>soldItemsCount</sectionref>
+      <sectionref>returnedItemsCount</sectionref>
+      <sectionref>LOCAL.ITEMS_COUNT</sectionref>-->
+      <sectionref>system_mode</sectionref>
+      <row />
+      <sectionref>trans_barcode</sectionref>
+      <row />
+    </section>
+	  <section name="headerTop_preLocal">
+      <sectionref>logo</sectionref>
+      <sectionref>transaction_store_location</sectionref>
+      <horizontal_rule />
+	</section>
+	<section name="signature_line">
+      <horizontal_rule style="Strong">
+        <field text="x" />
+      </horizontal_rule>
+	  <row />
+	  <horizontal_rule style="Strong">
+        <field text="x" />
+      </horizontal_rule>
+	  <row />
+	  <horizontal_rule style="Strong">
+        <field text="x" />
+      </horizontal_rule>
+    </section>
+  </sections>   
+</ReceiptDefinitions>
