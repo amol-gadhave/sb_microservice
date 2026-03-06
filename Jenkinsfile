@@ -2,17 +2,35 @@
 pipeline {
   agent any
   
+  
+  parameters {
+    string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Branch to build')
+  
+  }
+  
   tools {
     ant 'ANT_1.10'   // Jenkins → Manage Jenkins → Tools
     jdk 'JDK_11'     // Optional, if Ant build needs Java
   }
 
   stages {
-      
-  stage('Ant Distribution') {
+  
+  
+    stage('Checkout') {
       steps {
-        ant buildFile: 'lev/jenkins-build.xml',
-            targets: 'distribution'
+        checkout([$class: 'GitSCM',
+          branches: [[name: "*/${params.GIT_BRANCH}"]],
+          userRemoteConfigs: [[url: 'https://github.com/amol-gadhave/sb_microservice.git']]
+        ])
+        echo "Building branch: ${params.GIT_BRANCH}"
+      }
+    }
+
+      
+  stage('Ant Make') {
+      steps {
+        ant buildFile: 'tet/jenkins-build.xml',
+            targets: 'make'
       }
     }
     stage('Delinea: Token + Fetch Secret') {
