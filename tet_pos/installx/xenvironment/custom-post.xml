@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="custom post-install tasks" default="run-tasks" basedir=".">
+	<!--XSA23-91 Xstore environment update build issues:Start-->
+	<target name="run-tasks" description="Master target that calls other targets in order.">
+		<antcall target="lev-configure-config-path-for-xenvironment" />
+		<antcall target="lev-delete-and-copy-again-region-country-folders" /> <!--XA-951-->
+		<antcall target="lev-run-permission-script" /> <!-- XA-1487 : apply permission script to all folders after xadmin deployment -->
+	</target>
+
+	<target name="lev-configure-config-path-for-xenvironment" description="Lev Configures Xenvironment-specific config path">
+	    
+		<loadproperties prefix="ORIGXSTP" srcFile="${install.dir}/../xstore/xstore.properties"/>
+		<if>
+			<!-- <available file="${install.dir}/../xstore/updates/base-xstore.properties" /> -->
+			<available file="${install.dir}/../xstore/xstore.properties" />
+			<then>			
+			    <echo message="Properties file to update ${install.dir}/system.properties Component Updates" />
+				<propertyfile file="${install.dir}/system.properties">
+					<entry key="xstore.config.path.global.extensions" value=":region/${ORIGXSTP.dtv.location.RegionId}:country/${ORIGXSTP.dtv.location.CountryId}" />
+				</propertyfile>
+			</then>
+		</if>
+	</target>
+
+	<!--XSA23-91 Xstore environment update build issues:End-->
+	<!--XA-951 [LSA][LSE]EOD atoms not triggering during store close with environment major build: Start-->
+	<target name="lev-delete-and-copy-again-region-country-folders" description="Delete country and cust config folder ">
+		<if>
+			<and>
+			    <available file="${install.dir}/cust_config/region" type="dir" />
+			    <available file="${install.dir}/cust_config/country" type="dir" />
+			</and>
+			<then>			
+		        <delete dir="${install.dir}/cust_config/region" verbose="true" />
+		        <delete dir="${install.dir}/cust_config/country" verbose="true" />
+				
+				<echo message="Copying country and region level file from environment jar file and place under C:/environment/cust-config/region and country folder " />
+				<mkdir dir="${install.dir}/tmpZipDir" />
+				<unzip src="${basedir}/xenvironment.zip" dest="${install.dir}/tmpZipDir"></unzip>
+				<copy todir="${install.dir}/cust_config/region"  overwrite="true" verbose="true" >
+				      <fileset dir="${install.dir}/tmpZipDir/cust_config/region"/>
+				</copy>
+				<copy todir="${install.dir}/cust_config/country"  overwrite="true" verbose="true" >
+				      <fileset dir="${install.dir}/tmpZipDir/cust_config/country"/>
+				</copy>	
+				
+				<!--XA-1749: Added the logic to copy actions.properties and XenvMenuConfig Start -->
+			     <if>
+				   <contains string="${install.type}" substring="upgrade" />
+					<then>
+				      <echo message="Copy actions and Xenv Menu Config to version1 while upgrade" />
+						<copy todir="${install.dir}/cust_config/version1"  overwrite="true" verbose="true" >
+						  <fileset dir="${install.dir}/tmpZipDir/cust_config/version1">
+						   <include name="actions.properties" />
+						   <include name="XenvMenuConfig.xml" />
+						  </fileset>  
+						</copy>	
+					</then>
+				  </if>
+			    <!--XA-1749: Added the logic to copy actions.properties and XenvMenuConfig End  -->
+				
+				<delete dir="${install.dir}/tmpZipDir" />
+			</then>
+		</if>
+	   </target>
+	<!--XA-951 [LSA][LSE]EOD atoms not triggering during store close with environment major build: End-->
+	
+	<!-- XA-1487 : apply permission script to all folders after xadmin deployment -->	
+		<target name="lev-run-permission-script" description="Lev run permission script">
+			<if>
+	            <or>
+	              <contains string="${install.type}" substring="upgrade" />
+	              <contains string="${install.type}" substring="update" />
+	            </or>
+				<then>
+					<echo message="Running script to update permission to folder" />
+					<exec executable="${basedir}/custom/lev-custom/lev_automation.bat" spawn="false" >
+							<arg value="${basedir}/custom/lev-custom/pwshAdmin.ps1" />
+							<arg value="${basedir}/custom/lev-custom/UpdateFolderPermission.ps1" />				
+					</exec>
+					<sleep seconds="90" /> <!-- XA-1808 INC4125013 - access denied error on environment folder-->
+				</then>
+			</if>
+	  	</target>
+</project>

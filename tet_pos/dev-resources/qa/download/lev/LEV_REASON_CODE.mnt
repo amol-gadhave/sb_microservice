@@ -1,0 +1,3 @@
+<Header target_org_node="*:*" deployment_name="REASON_CODE" download_time="IMMEDIATE" apply_immediately="true" />
+INSERT|REASON_CODE|NO_SALE|NS_FORGOT_CHANGE|+LEV:NS_FORGOT_CHANGE||100|||||||||||*
+INSERT|REASON_CODE|NO_SALE|NS_DRAWER_CLOSED|+LEV:NS_DRAWER_CLOSED||101|||||||||||*

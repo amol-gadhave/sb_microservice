@@ -1,0 +1,4 @@
+<Header target_org_node="*:*" deployment_name="RETAIL_LOCATION_PROP" download_time="IMMEDIATE" apply_immediately="true" />
+INSERT|RETAIL_LOCATION_PROPERTY|921|RBC::CIF|STRING|RO1234565||
+INSERT|RETAIL_LOCATION_PROPERTY|921|RBC::HEADER_CIF_LINE|STRING|Test Cod Fiscal C.I.F.:||
+# File created: 2021-08-03 14:44 / Nr of records: 2

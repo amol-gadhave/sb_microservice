@@ -1,0 +1,1 @@
+To replace .truststore file with update build either checkin .truststore file in pos/lev_update_truststore or copy the file manually after update build creation

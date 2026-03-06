@@ -1,0 +1,5 @@
+<Header target_org_node="*:*" deployment_name="TRANSLATION" download_time="IMMEDIATE" apply_immediately="true" />
+INSERT|TRANSLATION|DEFAULT|+LEV:NS_FORGOT_CHANGE|Forgot to give change.|*|*
+INSERT|TRANSLATION|ro|+LEV:NS_FORGOT_CHANGE|Am uitat să dau schimb.|*|*
+INSERT|TRANSLATION|DEFAULT|+LEV:NS_DRAWER_CLOSED|The drawer did not open.|*|*
+INSERT|TRANSLATION|ro|+LEV:NS_DRAWER_CLOSED|Sertarul nu s-a deschis.|*|*

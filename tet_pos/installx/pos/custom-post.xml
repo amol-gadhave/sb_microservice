@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: custom-post.xml 444 2014-04-25 01:26:03Z dtvdomain\ikhan $ -->
+<!-- $URL: https://dtvsource/remote-svn/cst_template/branches/7.0.1/pos/installx/pos/custom-post.xml $ -->
+<project name="custom post-install tasks" default="run-tasks" basedir=".">
+
+	<!-- Properties required for Country Specific DB Script to run -->
+	<property name="custom-post-cust-id" value="LEV" />
+	<property file="${install.dir}/system.properties" prefix="xst" />
+	<!--<property file="${install.dir}/updates/base-xstore.properties" prefix="bxst" />-->
+	<property file="${install.dir}/xstore.properties" prefix="xstp" />
+	<property name="include.system" value="#!include system.properties" />
+	<property name="include.xstoreMobile" value="#!include xstore_mobile.properties" />
+	<property file="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" prefix="cxst" />
+	<!--<property name="base.xstore.properties.file" location="${install.dir}/updates/base-xstore.properties" />-->
+	<property file="${install.dir}/configPath.properties" prefix="cpp"/>
+	<property file="${xstore.mobile.install}/configPath.properties" prefix="mcpp"/>
+	<!-- XA-1801 -->
+	<property file="${root.dir}/eftlink/EftlinkConfig.properties" prefix="ecp"/>
+	<property file="${root.dir}/eftlink_mobile/EftlinkConfig.properties" prefix="emcp"/>
+	<!--XSA23-903 -->
+	<property name="mobile.xstore_mobile.properties.file" location="${xstore.mobile.install}/xstore_mobile.properties" />
+	<property name="xstore.xstore_mobile.properties.file" location="${install.dir}/xstore_mobile.properties" />
+	<!-- ========================================================= -->
+
+	
+	<target name="run-tasks" description="Master target that calls other targets in order.">
+		<property environment="env" />
+		<echoproperties />
+		<antcall target="run-country-specific-data" />
+		<antcall target="lev-update-lse-backoffice-config-path" />
+		<antcall target="lev-update-lse-nonlead-config-path" />
+		<antcall target="update-PL-ORS-config-path" />
+		<antcall target="lev-update-mobile-US-docker-config-path" />
+		<antcall target="lev-update-keystore-password" /> <!--XA-2097 PROD LSA Place a check for Keystore password value in xstore properties-->
+		<antcall target="lev-update-mobile-keystore-password" /> <!--XA-2097 PROD LSA Place a check for Keystore password value in xstore properties-->
+		<antcall target="lev-run-permission-script" /><!-- XA-1657 Global  Merging Autologon and permission script -->
+		<antcall target="lev-xmobile-update-TSE-properties" /> <!--XA-2012 Update TSE propeties for Mobile -->
+		<antcall target="update-lse-loyalty-config-path"/><!--CHKOUT-68 Loyalty Poland -->
+		<antcall target="update-lse-mobile-loyalty-config-path"/><!--CHKOUT-68 Loyalty Poland -->
+		<antcall target="lev-update-xstore-property" />	<!--SOLAR R3.1-->
+		
+	</target>
+
+
+	
+	<!-- STEP 1, KICKOFF REGIONAL and COUNTRY DATA SCRIPTS -->
+	<target name="run-country-specific-data" description="Install Country Specific Data Scripts">
+		<echo message="... Begining Step 1 - Kickoff Country Specific Data Scripts for Country:${xstp.dtv.location.CountryId}" />
+		<echo message="... install.type=${install.type}" />
+		<if>
+			<equals arg1="INSTALL" arg2="${install.type}" casesensitive="false" trim="true" />
+			<then>
+				<antcall target="country-specific-db-data-install" />
+				<!-- Start : XSV21-1529 Changes for Install Build Issue Config Path Base features property not updating -->
+				<antcall target="update-base-config-path-property" />
+				<!-- End : XSV21-1529 Changes for Install Build Issue Config Path Base features property not updating -->
+				<antcall target="update-xstore-property" />
+				<antcall target="update-xstore-mobile-property" />
+				<antcall target="update-invoice-config-path"/>
+				<antcall target="replace-loyalty-config-path"/>
+				<antcall target="replace-mobile-loyalty-config-path"/>
+				<antcall target="update-loyalty-config-path"/>
+				<antcall target="update-mobile-loyalty-config-path"/>
+				<antcall target="dataloader-region-mnts" />
+				<antcall target="dataloader-country-mnts"/>
+				<!-- <antcall target="run-levconfigure-cmd"/> -->
+				<antcall target="update-lsa-loyalty-config-path" />
+				<antcall target="update-lsa-mobile-loyalty-config-path"/>
+				<antcall target="lev-update-tpgjavapos-jar"/> <!-- CHKOUT-389: Update tpgjavapos.jar for CN H300C printers -->
+			</then>
+		</if>
+		<if>
+			<equals arg1="update" arg2="${install.type}" casesensitive="false" trim="true" />
+			<then>
+				<antcall target="lev-unzip-custom-xstore-properties"/>
+				<antcall target="lev-update-properties-from-xstore-backup"/>
+				<antcall target="update-xstore-property" />
+				<antcall target="update-xstore-mobile-property" />
+				<antcall target="country-specific-db-data-update" />
+				<!-- <antcall target="run-levconfigure-cmd"/> -->
+				<!-- RETLDEV-20-->
+				<antcall target="update-invoice-config-path"/>
+			    <antcall target="replace-loyalty-config-path"/>
+			    <antcall target="replace-mobile-loyalty-config-path"/>
+				<antcall target="update-loyalty-config-path"/>
+				<antcall target="update-mobile-loyalty-config-path"/>
+
+				<!-- commented as in v21 no baseConfigure.bat -->
+				<!-- <antcall target="run-baseconfigure-cmd"/> -->
+				<!-- <antcall target="run-truststore-cmd"/> -->
+				<!--XSV21-920 changes starts-->
+				<!--<antcall target="update-relate-auth-prop"/> Commeting this antcall , as this was ovveriding correct value with harcoded value configured in the custom post-->
+				<!--XSV21-920 changes end-->		
+				<!--Changes for XA-1826 start-->
+				<antcall target="lev-update-truststore"/>
+				<!--Changes for XA-1826 end-->
+				<antcall target="update-lsa-loyalty-config-path" />
+				<antcall target="update-lsa-mobile-loyalty-config-path"/>
+				<antcall target="lev-update-tpgjavapos-jar"/> <!-- CHKOUT-389: Update tpgjavapos.jar for CN H300C printers -->
+			</then>
+		</if>
+		<if>
+			<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" />
+			<then>
+				<antcall target="lev-unzip-custom-xstore-properties"/>
+				<antcall target="lev-update-properties-from-xstore-backup"/>
+				<!-- RETLDEV-20 -->
+				<antcall target="update-xstore-property" />
+				<antcall target="update-xstore-mobile-property" />
+				<antcall target="update-invoice-config-path"/>
+				<antcall target="replace-loyalty-config-path"/>
+				<antcall target="replace-mobile-loyalty-config-path"/>
+				<antcall target="update-loyalty-config-path"/>
+				<antcall target="update-mobile-loyalty-config-path"/>
+				<antcall target="loadMobileSystemProperty"/>
+			</then>
+		</if>
+		<!--XSA-633 changes to copy wrapper files with patch starts-->
+		<if>
+			<equals arg1="patch" arg2="${install.type}" casesensitive="false" trim="true" />
+			<then>
+				<antcall target="run-copyWrapperConf-cmd"/>
+			</then>
+		</if>
+		<!--XSA-633 changes to copy wrapper files with patch end-->
+		<!--XSV21-904 changes starts-->
+		<antcall target="update-xstore-eftlink-prop"/>
+		<antcall target="update-xmobile-eftlink-prop"/>		
+		<!--XSV21-904 changes end-->
+	</target>
+<!-- RETLDEV-20 Add configuration to take property values from backup at the time on update/upgrade :: Start -->	
+	<target name="lev-check-and-load-deployment-properties">
+		<for list="lev.copy.properties.value.from.backup,lev.list.properties.copy.from.backup" param="deploymentprop">
+			<sequential>					
+				<if>
+					<and>
+					  <available file="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" />
+					  <containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="@{deploymentprop}" />
+					</and>
+					<then>
+					  <loadproperties prefix="COUNTRY_DEPLOYMENT" srcFile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties">
+						<filterchain>
+						  <linecontains>
+							<contains value="@{deploymentprop}" />
+						  </linecontains>
+						</filterchain>
+					  </loadproperties>
+					  <property name="final.@{deploymentprop}" value="${COUNTRY_DEPLOYMENT.@{deploymentprop}}"/>
+					</then>
+					<else>
+					  <loadproperties prefix="GLOBAL_DEPLOYMENT" srcFile="${basedir}/custom/lev-deployment.properties">
+						<filterchain>
+						  <linecontains>
+							<contains value="@{deploymentprop}" />
+						  </linecontains>
+						</filterchain>
+					  </loadproperties>    
+					  <property name="final.@{deploymentprop}" value="${GLOBAL_DEPLOYMENT.@{deploymentprop}}"/>							  
+					</else>
+				</if>
+			</sequential>
+		</for>
+	</target>
+	
+	<target name="lev-update-properties-from-xstore-backup" if="${final.lev.copy.properties.value.from.backup}" depends="lev-check-and-load-deployment-properties">      
+		<trycatch property="missing-backup-prop-file" reference="error-ref">
+		  <try>
+			<property url="jar:file:${root.dir}/BACKUPxstore/xstore-pos-backup.zip!/xstore.properties"/>
+		  </try>
+		  <catch>
+			<echo message="WARNING:File xstore.properties is not found in the the xstore backup folder."/>
+		  </catch> 
+		</trycatch>
+
+		<if>
+		    <not>
+			    <isset property="missing-backup-prop-file" />
+			</not>
+			<then>
+				<property url="jar:file:${root.dir}/BACKUPxstore/xstore-pos-backup.zip!/xstore.properties" prefix="XSTORE_PROP_FRM_BKUP"/>
+				<for list="${final.lev.list.properties.copy.from.backup}" param="prop">
+					<sequential>
+								<propertyfile file="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties">
+									<entry key="@{prop}" value="${XSTORE_PROP_FRM_BKUP.@{prop}}" />
+								</propertyfile>
+								<echo message="Updated property @{prop} from xstore backup to xstore updates xstore.properties" />
+								<echo message=" " />
+					</sequential>
+				</for>
+			</then>
+		</if>
+	</target>
+<!-- RETLDEV-20 Add configuration to take property values from backup at the time on update/upgrade :: End -->
+	
+	
+<!-- if download files were included, create an archive of those files and run the dataloader -->
+  <target name="dataloader-country-mnts" >
+    <fileset id="download.files" dir="${install.dir}/download">
+      <exclude name="readme.txt" />
+    </fileset>
+    <pathconvert property="downloadFilesFound" setonempty="false" pathsep=" ">
+      <fileset refid="download.files" />
+    </pathconvert>
+
+    <if>
+      <isset property="downloadFilesFound" />
+      <then>
+        <if>
+          <available file="${install.dir}/download/COUNTRY_${xstp.dtv.location.CountryId}" type="dir" />
+          <then>
+            <echo message="Copying data for country COUNTRY_${xstp.dtv.location.CountryId} to download directory." />
+            <copy verbose="true" todir="${install.dir}/download">
+              <fileset includes="**/*" dir="${install.dir}/download/COUNTRY_${xstp.dtv.location.CountryId}" />
+              <globmapper from="*" to="COUNTRY_${xstp.dtv.location.CountryId}_*" />
+            </copy>
+          </then>
+        </if>
+        <echo message="Deleting country specific data." />
+        <delete includeemptydirs="true" verbose="true">
+          <fileset includes="??/**/*" dir="${install.dir}/download" />
+          <dirset includes="??" dir="${install.dir}/download" />
+	  <fileset includes="???????_??/**/*" dir="${install.dir}/download" />
+          <dirset includes="???????_??" dir="${install.dir}/download" />	  
+        </delete>    
+        <if>
+          <isfalse value="${copy.test.data}" />
+          <then>
+            <echo message="Production environment selected. Deleting test data." />
+            <delete verbose="true">
+              <fileset includes="**/*test*.mnt" casesensitive="false" dir="${install.dir}/download" />
+            </delete>
+          </then>
+        </if>
+      </then>
+    </if>
+
+    <fileset id="download.files2" dir="${install.dir}/download">
+      <exclude name="readme.txt" />
+    </fileset>
+    <pathconvert property="downloadFilesFound2" setonempty="false" pathsep=" ">
+      <fileset refid="download.files2" />
+    </pathconvert>
+
+    <if>
+      <isset property="downloadFilesFound2" />
+      <then>
+        <zip destfile="${install.dir}/database/installx/download.zip">
+          <fileset refid="download.files" />
+        </zip>
+        <echo message="Found download files. The dataloader will be invoked." />
+        <exec dir="${install.dir}" executable="${install.dir}/dataloader2${os.ext}" />
+      </then>
+      <else>
+        <echo message="No download files were provided.  The dataloader will not be invoked." />
+      </else>
+    </if>
+  </target>
+  <target name="dataloader-region-mnts" >
+    <fileset id="download.files" dir="${install.dir}/download">
+      <exclude name="readme.txt" />
+    </fileset>
+    <pathconvert property="downloadFilesFound" setonempty="false" pathsep=" ">
+      <fileset refid="download.files" />
+    </pathconvert>
+
+    <if>
+      <isset property="downloadFilesFound" />
+      <then>
+        <if>
+          <available file="${install.dir}/download/${xstp.dtv.location.RegionId}" type="dir" />
+          <then>
+            <echo message="Copying data for country ${xstp.dtv.location.RegionId} to download directory." />
+            <copy verbose="true" todir="${install.dir}/download">
+              <fileset includes="**/*" dir="${install.dir}/download/${xstp.dtv.location.RegionId}" />
+              <globmapper from="*" to="REGION_${xstp.dtv.location.RegionId}_*" />
+            </copy>
+          </then>
+        </if>
+		<echo message="Deleting region specific data." />
+        <delete includeemptydirs="true" verbose="true">
+          <fileset includes="??/**/*" dir="${install.dir}/download" />
+          <dirset includes="??" dir="${install.dir}/download" />
+	  <fileset includes="???/**/*" dir="${install.dir}/download" />
+          <dirset includes="???" dir="${install.dir}/download" />		 
+        </delete>        
+        <if>
+          <isfalse value="${copy.test.data}" />
+          <then>
+            <echo message="Production environment selected. Deleting test data." />
+            <delete verbose="true">
+              <fileset includes="**/*test*.mnt" casesensitive="false" dir="${install.dir}/download" />
+            </delete>
+          </then>
+        </if>
+      </then>
+    </if>
+
+    <fileset id="download.files2" dir="${install.dir}/download">
+      <exclude name="readme.txt" />
+    </fileset>
+    <pathconvert property="downloadFilesFound2" setonempty="false" pathsep=" ">
+      <fileset refid="download.files2" />
+    </pathconvert>
+
+    <if>
+      <isset property="downloadFilesFound2" />
+      <then>
+        <zip destfile="${install.dir}/database/installx/download.zip">
+          <fileset refid="download.files" />
+        </zip>
+        <echo message="Found download files. The dataloader will be invoked." />
+        <exec dir="${install.dir}" executable="${install.dir}/dataloader2${os.ext}" />
+      </then>
+      <else>
+        <echo message="No download files were provided.  The dataloader will not be invoked." />
+      </else>
+    </if>
+  </target>
+
+	<!-- STEP 2, POPULATE XSTORE DATABASE WITH REGIONAL and COUNTRY DATA SCRIPTS -->
+	<target name="country-specific-db-data-install">
+		<echo message="... Begining Step 2 - Populate Xstore Database With Country Specific Data Scripts for Country:${xstp.dtv.location.CountryId}" />
+		<!-- EX: lev-CC-BaseData.sql -->
+		<!-- EX: lev-CC-DataUpdate.sql -->
+		<!-- EX: lev-CC-StoreSpecificData.sql -->
+		<antcall target="run-target-file-BaseTestData" />
+		<antcall target="run-target-file-BaseData" />
+		<antcall target="run-target-file-DataUpdate" />
+		<antcall target="run-target-file-StoreSpecificData" />
+		<antcall target="country-specific-db-data-install-test" />
+	</target>
+
+	<!-- STEP 3, POPULATE XSTORE DATABASE WITH TEST DATA SCRIPTS IF INSTALL ENV IS TEST-->
+	<target name="country-specific-db-data-install-test">
+		<if>
+			<equals arg1="TEST" arg2="${install.env}" casesensitive="false" trim="true" />
+			<then>
+				<echo message="... the user has also elected to install TEST data." />
+				<echo message="... Begining Step 3 - Populate Xstore Database With Country Specific Test Data Update Scripts for Country:${xstp.dtv.location.CountryId}" />
+				<!-- EX: lev-CC-TestData.sql -->
+				<!-- EX: lev-CC-TestStoreData.sql -->
+			<!--	<antcall target="run-target-file-TestData" />
+				<antcall target="run-target-file-TestStoreData" />  -->
+			</then>
+			<else>
+				<echo message="... this is a PROD environment. Test data scripts will not be run." />
+			</else>
+		</if>
+	</target>
+     <target name="run-target-file-TestStoreData">
+	    <property name="sql.file.name.target" value="ClientData" />
+	    <antcall target="run-target-file" />
+	  </target>
+	<!-- STEP 2, POPULATE XSTORE DATABASE WITH REGIONAL and COUNTRY DATA SCRIPTS -->
+	<target name="country-specific-db-data-update">
+		<echo message="... Begining Step 2 - Populate Xstore Database With Country Specific Data Update Scripts for Country:${xstp.dtv.location.CountryId}" />
+		<!-- EX: lev-CC-DataUpdate.sql -->
+		<antcall target="run-target-file-DataUpdate-Update" />
+		<!--<antcall target="run-target-file-StoreSpecificData" />-->
+	</target>
+
+	<!-- =================================================================================== -->
+
+	<target name="run-target-file-BaseTestData">
+		<property name="sql.file.name.target" value="ClientTestData" />
+		<antcall target="run-base-target" />
+	</target>
+	<target name="run-target-file-BaseData">
+		<property name="sql.file.name.target" value="ClientData" />
+		<antcall target="run-base-target" />
+	</target>
+	<target name="run-target-file-DataUpdate-Update">
+		<property name="sql.file.name.target" value="ClientDataUpdate" />
+		<antcall target="run-global-target" />
+		<antcall target="run-region-file" />
+	</target>
+	
+    <target name="run-target-file-DataUpdate">
+		<property name="sql.file.name.target" value="ClientData" />
+		<antcall target="run-global-target" />
+		<antcall target="run-region-file" />
+	</target>
+	
+	<target name="run-target-file-StoreSpecificData">
+		<property name="sql.file.name.target" value="ClientData" />
+		<antcall target="run-target-file" />
+	</target>
+	<target name="run-target-file-TestData">
+	    <property name="sql.file.name.target" value="ClientData" />
+	    <antcall target="run-target-file" />
+	  </target>
+	<target name="run-base-target">
+			<fail unless="sql.file.name.target" message="sql.file.target must be specified" />
+			<property name="sql.file.name" value="${sql.file.name.target}.sql" />
+			<antcall target="run-sql-cmd" />
+		</target>
+	<target name="run-global-target">
+			<fail unless="sql.file.name.target" message="sql.file.target must be specified" />
+			<property name="sql.file.name" value="${custom-post-cust-id}-${sql.file.name.target}.sql" />
+			<antcall target="run-sql-cmd" />
+		</target>
+	
+	<target name="run-region-file">
+			<fail unless="sql.file.name.target" message="sql.file.target must be specified" />
+			<property name="sql.file.name" value="${custom-post-cust-id}-${xstp.dtv.location.RegionId}-${sql.file.name.target}.sql" />
+			<antcall target="run-sql-cmd" />
+		</target>
+	
+	<target name="run-target-file">
+		<fail unless="sql.file.name.target" message="sql.file.target must be specified" />
+		<property name="sql.file.name" value="${custom-post-cust-id}-${xstp.dtv.location.CountryId}-${sql.file.name.target}.sql" />
+		<antcall target="run-sql-cmd" />
+	</target>
+	
+
+	<target name="run-sql-cmd">
+		<fail unless="sql.file.name" message="sql.file must be specified" />
+		<echo message="... running ${install.dir}/database/command/run_sql.bat for file ${sql.file.name}" />
+		<property name="script.path" value="${install.dir}\database" />
+		<if>
+			<equals arg1="update" arg2="${install.type}" casesensitive="false" trim="true" />
+			<then>
+				<!-- During install we have access to ant.install.properties -->
+				<exec executable="${install.dir}/database/command/run_sql.bat" failifexecutionfails="true" failonerror="true">
+					<arg value="${script.path}" />
+					<arg value="${custom-post-cust-id}" />
+					<arg value="${sql.file.name}" />
+					<arg value="${localDB}" />
+					<!-- V21 changes reading store profile from xstore.properties file-->
+					<!--<arg value="${xst.dtv.location.organizationId}" />
+					<arg value="${xst.dtv.location.storeNumber}" />
+					<arg value="${bxst.dtv.location.CountryId}" />
+					<arg value="${bxst.dtv.location.CurrencyId}" />
+					<arg value="${bxst.dtv.location.RegionId}" />-->
+					<arg value="${xstp.dtv.location.organizationId}" />
+					<arg value="${xstp.dtv.location.storeNumber}" />
+					<arg value="${xstp.dtv.location.CountryId}" />
+					<arg value="${xstp.dtv.location.CurrencyId}" />
+					<arg value="${xstp.dtv.location.RegionId}" />
+				</exec>
+			</then>
+			<else>
+				<!-- During update ant.install.properties is not available -->
+				<exec executable="${install.dir}/database/command/run_sql.bat" failifexecutionfails="true" failonerror="true">
+					<arg value="${script.path}" />
+					<arg value="${custom-post-cust-id}" />
+					<arg value="${sql.file.name}" />
+					<arg value="${localDB}" />
+					<!-- V21 changes reading store profile from xstore.properties file-->
+					<!--<arg value="${xst.dtv.location.organizationId}" />
+					<arg value="${xst.dtv.location.storeNumber}" />
+					<arg value="${bxst.dtv.location.CountryId}" />
+					<arg value="${bxst.dtv.location.CurrencyId}" />
+					<arg value="${bxst.dtv.location.RegionId}" />-->
+					<arg value="${xstp.dtv.location.organizationId}" />
+					<arg value="${xstp.dtv.location.storeNumber}" />
+					<arg value="${xstp.dtv.location.CountryId}" />
+					<arg value="${xstp.dtv.location.CurrencyId}" />
+					<arg value="${xstp.dtv.location.RegionId}" />
+				</exec>
+			</else>
+		</if>
+	</target>
+	<!--<target name="run-levconfigure-cmd">
+		<echo message="... running ${install.dir}/levconfigure.bat" />
+		<exec executable="${install.dir}/levconfigure.bat" failifexecutionfails="true" failonerror="true"/>
+		<exec executable="${xstore.mobile.install}/mobile_levconfigure.bat" failifexecutionfails="true" failonerror="true"/>
+	</target>-->
+	
+	<!--<target name="run-truststore-cmd">
+		<echo message="... running ${install.dir}/levtrust.bat" />
+		<exec executable="${install.dir}/levtrust.bat" failifexecutionfails="true" failonerror="true"/>
+		<echo message="... running ${xstore.mobile.install}/levmobile_trust.bat" />
+		<exec executable="${xstore.mobile.install}/levmobile_trust.bat" failifexecutionfails="true" failonerror="true"/>
+	</target>-->
+	
+	<!--XSA-633 changes to copy wrapper files with patch starts-->
+	<target name="run-copyWrapperConf-cmd">
+		<echo message="... running run-copyWrapperConf-cmd" />
+			<if>
+				<available file="${install.dir}/wrapper/conf" type="dir" />
+				<then>
+					<copy todir="${install.dir}/wrapper/conf">
+						<fileset dir="${basedir}/wrapper/conf" includes="*.conf" />
+					</copy>
+				</then>
+			</if>
+			<if>
+				<available file="${xstore.mobile.install}/wrapper/conf" type="dir" />
+				<then>
+					<copy todir="${xstore.mobile.install}/wrapper/conf">
+						<fileset dir="${basedir}/wrapper/conf" includes="*.conf" />
+					</copy>
+				</then>
+			</if>
+	</target>
+	<!--XSA-633 changes to copy wrapper files with patch ends-->
+
+<!-- Tareget which update country specific value in xstore_countryID.properties file value into  xstore.prop -->
+
+		<target name="is-country-match">
+	    	<condition property="ifcountry">
+				<contains string="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" substring="${xstp.dtv.location.CountryId}" />				
+			</condition>	         	
+		</target>
+
+		<!--XSV21-734 changes start-->
+		<target name="update-xstore-property" depends="is-country-match">
+			<echo message="Updating data from country COUNTRY_${xstp.dtv.location.CountryId} to xstore.prop file ." />
+	    	<updatexstoreproperties mergefile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" origfile="${install.dir}/xstore.properties" overwrite="true" />
+			<echo message="Updating mobile range properties" />    
+			<propertyfile file="${xstore.xstore_mobile.properties.file}">
+			 	<entry key="xstore.location.mobile.workstationId.range.start" value="101" />
+			    <entry key="xstore.location.mobile.workstationId.range.end" value="199" />
+			</propertyfile>
+		    <echo message="Mobile range properties updated" />    
+		</target>
+		
+		<target name="update-xstore-mobile-property" depends="is-country-match">
+			<echo message="Updating data from country COUNTRY_${xstp.dtv.location.CountryId} to xstore_mobile.prop file ." />    
+			<updatexmobileproperties mergefile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" origfile="${xstore.mobile.install}/xstore_mobile.properties" overwrite="true" />		
+			<echo message="Updating mobile range properties" />    
+		    <propertyfile file="${mobile.xstore_mobile.properties.file}">
+			       	<entry key="xstore.location.mobile.workstationId.range.start" value="101" />
+			        <entry key="xstore.location.mobile.workstationId.range.end" value="199" />
+			</propertyfile>
+		    <echo message="Mobile range properties updated" /> 
+		</target>
+		<!--XSV21-734 changes end-->
+
+	<!-- Taregt for xmobile property update -->
+		<target name="loadMobileSystemProperty" depends="isPropertyStringFound">
+			<replaceregexp file="${xstore.mobile.install}/system_mobile.properties"
+			               match="${include.system}"
+			               replace="${include.xstoreMobile}"/>
+		</target>
+	
+		<target name="isPropertyStringFound">
+			<condition property="ifPropertyPresent">
+				<contains string="${xstore.mobile.install}/system_mobile.properties" substring="${include.system}" />					
+				</condition>    	
+		</target>
+		<!--<target name="run-baseconfigure-cmd">
+			<echo message="... running ${install.dir}/baseconfigure.bat" />
+			<exec executable="${install.dir}/baseconfigure.bat" failifexecutionfails="true" failonerror="true"/>
+		</target>-->
+	
+		<target name="update-invoice-config-path" depends="isPathAlreadyUpdated" if="isInvoiceExistInConfigPath">
+			<if>
+				<equals arg1="TH" arg2="${xstp.dtv.location.CountryId}" casesensitive="false" trim="true" />
+				<then>
+					<echo message="adding invoice in configpath" />
+					<propertyfile file="${install.dir}/configPath.properties">
+						<entry key="xstore.config.path.global.extensions" value="${cpp.xstore.config.path.global.extensions}${cxst.invoice}" />
+					</propertyfile>
+				</then>
+			</if>
+		</target>
+
+		<target name="isPathAlreadyUpdated" if="isMailLineStore">
+			<condition property="isInvoiceExistInConfigPath">
+				<not>
+					<contains string="${cpp.xstore.config.path.global.extensions}" substring="${cxst.invoice}" />
+				</not>
+			</condition>
+		</target>
+	
+		<condition property="isMailLineStore">
+			<not>
+				<contains string="${cpp.xstore.config.path.global.extensions}" substring="${cxst.storeType}" />
+			</not>
+		</condition>
+	
+		<target name="update-loyalty-config-path" if="isLoyaltyExistInConfigPath" >
+			<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+				<filterchain>
+					<linecontains>
+						<contains value="lev.loyalty" />
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+			<if>
+				<containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="${levProp.lev.loyalty}" />
+				<then>
+					<!--<loadproperties prefix="basexstoreprop" srcFile="${install.dir}/updates/base-xstore.properties">
+								<filterchain>
+									<linecontains>
+										<contains value="xstore.config.path.global.extensions" />
+									</linecontains>
+								</filterchain>
+							</loadproperties>-->
+					<if>
+	                    <and>
+							<equals arg1="true" arg2="${cxst.lev.loyalty.enabled}" casesensitive="false" trim="true" />
+							<not>
+								<contains string="${cpp.xstore.config.path.global.extensions}" substring=":loyalty" />
+							</not>
+						</and>								<then>
+										<echo message="${cxst.lev.loyalty.enabled}" />
+										<propertyfile file="${install.dir}/configPath.properties">
+											<entry key="xstore.config.path.global.extensions" value="${cpp.xstore.config.path.global.extensions}${cxst.loyalty}" />
+										</propertyfile>
+									</then>
+					</if>
+				</then>
+				<else>
+				            <echo message="${levProp.lev.loyalty}" />
+				 </else>
+			</if>
+		</target>
+	
+	
+		<condition property="isLoyaltyExistInConfigPath">
+			<not>
+				<contains string="${cpp.xstore.config.path.global.extensions}" substring="${cxst.loyalty}" />
+			</not>
+		</condition>
+		
+		<target name="replace-loyalty-config-path" >
+			<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+				<filterchain>
+					<linecontains>
+						<contains value="lev.loyalty" />
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+			<if>
+				<containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="${levProp.lev.loyalty}" />
+				<then>
+					<!--<loadproperties prefix="basexstoreprop" srcFile="${install.dir}/updates/base-xstore.properties">
+						<filterchain>
+							<linecontains>
+								<contains value="xstore.config.path.global.extensions" />
+							</linecontains>
+						</filterchain>
+					</loadproperties>-->
+					<if>
+						<and>
+							<equals arg1="true" arg2="${cxst.lev.loyalty.enabled}" casesensitive="false" trim="true" />
+							<contains string="${cpp.xstore.config.path.global.extensions}" substring=":loyalty" />
+						</and>
+						<then>
+							<loadproperties prefix="ORIGCPPPROPS" srcFile="${install.dir}/configPath.properties">
+								<filterchain>
+									<linecontains>
+										<contains value="xstore.config.path.global.extensions"/>
+									</linecontains>
+								</filterchain>
+							</loadproperties>
+							<echo message="Original: ${ORIGCPPPROPS.xstore.config.path.global.extensions}" />
+	
+							<loadresource property="xstore.config.path.global.extensions.adjusted">
+								<propertyresource name="ORIGCPPPROPS.xstore.config.path.global.extensions"/>
+								<filterchain>
+									<tokenfilter>
+										<filetokenizer/>
+										<replacestring from=":loyalty" to="${cxst.loyalty}"/>
+									</tokenfilter>
+								</filterchain>
+							</loadresource>
+	
+							<!-- put the adjusted entry in-place of the original -->
+							<propertyfile file="${install.dir}/configPath.properties">
+								<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+							</propertyfile>
+						</then>
+					</if>
+				</then>
+				<else>
+					<echo message="${levProp.lev.loyalty}" />
+				</else>
+			</if>
+		</target>
+
+
+	  <target name="update-xstore-eftlink-prop" if="isDisablePrintPropertyExists" description="updating eft link prop if exist">
+	    <if>
+	      <and>
+		    <equals arg1="AMA" arg2="${xstp.dtv.location.RegionId}" casesensitive="false" trim="true" />	
+	        <available file="C:/eftlink/EftlinkConfig.properties" />
+	      </and>
+	      <then>
+            <propertyfile file="C:/eftlink/EftlinkConfig.properties">
+	          <entry key="DisablePrinting" value="true" />
+	        </propertyfile>
+	      </then>
+	    </if>
+	  </target>	
+	
+	  <target name="update-xmobile-eftlink-prop" if="isDisablePrintPropertyExistsMobile" description="updating xmobile eft link prop if exist">
+	    <if>
+	     <and>
+	       <equals arg1="AMA" arg2="${xstp.dtv.location.RegionId}" casesensitive="false" trim="true" />	
+	       <available file="C:/eftlink_mobile/EftlinkConfig.properties" />
+	     </and>
+	      <then>
+          <propertyfile file="C:/eftlink_mobile/EftlinkConfig.properties">
+	          <entry key="DisablePrinting" value="true" />
+	        </propertyfile>
+	      </then>
+	    </if>
+	  </target>	
+	<!-- XA-1801 -->
+	   <condition property="isDisablePrintPropertyExists">
+				  <not>
+				  	<contains string="${ecp.DisablePrinting}" substring="true" />
+				  </not>
+		</condition>
+	   <condition property="isDisablePrintPropertyExistsMobile">
+					  <not>
+					  	<contains string="${emcp.DisablePrinting}" substring="true" />
+					  </not>
+			</condition>
+	<!-- XA-1801 -->	
+	
+	  <!-- updates a properties file using a new properties file -->
+	  <macrodef name="updatexstoreproperties">
+	      <attribute name="origfile" />
+	      <attribute name="mergefile" />
+	      <attribute name="overwrite" default="true" />
+	      <sequential>
+	        <if>
+	          <and>
+	            <available file="@{mergefile}" />
+	            <available file="@{origfile}" />
+	          </and>
+	          <then>
+	            <echo message="** Found @{mergefile}, running upgrade procedure." />
+	            <mergePropertyFiles origfile="@{origfile}" mergefile="@{mergefile}" output="${install.dir}/xstore_update.properties" overwrite="@{overwrite}" />
+	            
+	            <echo message="** Replacing @{origfile} with updated version" />
+	            <copy file="${install.dir}/xstore_update.properties" tofile="${install.dir}/xstore.properties" overwrite="true" verbose="true" />
+	            <delete file="${install.dir}/xstore_update.properties" verbose="true" />
+	          </then>
+	          <else>
+	            <echo level="warning" message="*** Config file @{mergefile} or original file @{origfile} does not exist.  No merge was attempted. ***" />
+	          </else>
+	        </if>
+	      </sequential>
+	    </macrodef>	
+		
+	  <macrodef name="updatexmobileproperties">
+	      <attribute name="origfile" />
+	      <attribute name="mergefile" />
+	      <attribute name="overwrite" default="true" />
+	      <sequential>
+	        <if>
+	          <and>
+	            <available file="@{mergefile}" />
+	            <available file="@{origfile}" />
+	          </and>
+	          <then>
+	            <echo message="** Found @{mergefile}, running upgrade procedure." />
+	            <mergePropertyFiles origfile="@{origfile}" mergefile="@{mergefile}" output="${xstore.mobile.install}/xstore_update.properties" overwrite="@{overwrite}" />
+	            
+	            <echo message="** Replacing @{origfile} with updated version" />
+	            <copy file="${xstore.mobile.install}/xstore_update.properties" tofile="${xstore.mobile.install}/xstore_mobile.properties" overwrite="true" verbose="true" />
+	            <delete file="${xstore.mobile.install}/xstore_update.properties" verbose="true" />
+	          </then>
+	          <else>
+	            <echo level="warning" message="*** Config file @{mergefile} or original file @{origfile} does not exist.  No merge was attempted. ***" />
+	          </else>
+	        </if>
+	      </sequential>
+	    </macrodef>		
+		
+		<target name="update-mobile-loyalty-config-path" if="isLoyaltyExistInMobileConfigPath" >
+			<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+				<filterchain>
+					<linecontains>
+						<contains value="lev.loyalty" />
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+			<if>
+				<containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="${levProp.lev.loyalty}" />
+				<then>
+					<!--<loadproperties prefix="basexstoreprop" srcFile="${install.dir}/updates/base-xstore.properties">
+								<filterchain>
+									<linecontains>
+										<contains value="mobile.xstore.config.path.global.extensions" />
+									</linecontains>
+								</filterchain>
+							</loadproperties>-->
+					<if>
+	                    <and>
+							<equals arg1="true" arg2="${cxst.lev.loyalty.enabled}" casesensitive="false" trim="true" />
+						</and>								<then>
+										<echo message="${cxst.lev.loyalty.enabled}" />
+										<propertyfile file="${xstore.mobile.install}/configPath.properties">
+											<entry key="xstore.config.path.global.extensions" value="${mcpp.xstore.config.path.global.extensions}${cxst.loyalty}" />
+										</propertyfile>
+									</then>
+					</if>
+				</then>
+				<else>
+				            <echo message="${levProp.lev.loyalty}" />
+				 </else>
+			</if>
+		</target>
+	
+	
+		<condition property="isLoyaltyExistInMobileConfigPath">
+			<not>
+				<contains string="${mcpp.xstore.config.path.global.extensions}" substring="${cxst.loyalty}" />
+			</not>
+		</condition>
+	
+		<target name="replace-mobile-loyalty-config-path" >
+				<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+					<filterchain>
+						<linecontains>
+							<contains value="lev.loyalty" />
+						</linecontains>
+					</filterchain>
+				</loadproperties>
+				<if>
+					<containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="${levProp.lev.loyalty}" />
+					<then>
+						<!--<loadproperties prefix="basexstoreprop" srcFile="${install.dir}/updates/base-xstore.properties">
+							<filterchain>
+								<linecontains>
+									<contains value="mobile.xstore.config.path.global.extensions" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>-->
+						<if>
+							<and>
+								<equals arg1="true" arg2="${cxst.lev.loyalty.enabled}" casesensitive="false" trim="true" />
+								<contains string="${mcpp.xstore.config.path.global.extensions}" substring=":loyalty" />
+							</and>
+							<then>
+								<loadproperties prefix="ORIGMCPPPROPS" srcFile="${xstore.mobile.install}/configPath.properties">
+									<filterchain>
+										<linecontains>
+											<contains value="xstore.config.path.global.extensions"/>
+										</linecontains>
+									</filterchain>
+								</loadproperties>
+								<echo message="Original: ${ORIGMCPPPROPS.xstore.config.path.global.extensions}" />
+	
+								<loadresource property="mobile.xstore.config.path.global.extensions.adjusted">
+									<propertyresource name="ORIGMCPPPROPS.xstore.config.path.global.extensions"/>
+									<filterchain>
+										<tokenfilter>
+											<filetokenizer/>
+											<replacestring from=":loyalty" to="${cxst.loyalty}"/>
+										</tokenfilter>
+									</filterchain>
+								</loadresource>
+	
+								<!-- put the adjusted entry in-place of the original -->
+								<propertyfile file="${xstore.mobile.install}/configPath.properties">
+									<entry key="xstore.config.path.global.extensions" value="${mobile.xstore.config.path.global.extensions.adjusted}" />
+								</propertyfile>
+							</then>
+						</if>
+					</then>
+					<else>
+						<echo message="${levProp.lev.loyalty}" />
+					</else>
+				</if>
+			</target>
+	
+			<target name="lev-unzip-custom-xstore-properties">
+			    <echo message="running lev-unzip-custom-xstore-properties" />
+				<mkdir dir="${install.dir}/tmpZipDir" />
+				<unzip src="${basedir}/xstore-pos-pos.zip" dest="${install.dir}/tmpZipDir"></unzip>
+				<copy todir="${install.dir}/updates" file="${install.dir}/tmpZipDir/updates/xstore_${xstp.dtv.location.CountryId}.properties" overwrite="true" verbose="true" />
+				<delete dir="${install.dir}/tmpZipDir" />
+			</target>
+			
+	<!-- Start : XSV21-1529 Changes for Install Build Issue Config Path Base features property not updating -->
+		<target name="update-base-config-path-property">
+		<echo message="in target update-base-config-path-property" />
+			<if>
+				<containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="xstore.config.path.base.features" />
+				<then>
+					<echo message="updating base-config-path in configpath" />
+					<propertyfile file="${install.dir}/configPath.properties">
+						<entry key="xstore.config.path.base.features" value="${cxst.xstore.config.path.base.features}" />
+					</propertyfile>
+					<propertyfile file="${xstore.mobile.install}/configPath.properties">
+						<entry key="xstore.config.path.base.features" value="${cxst.xstore.config.path.base.features}" />
+					</propertyfile>
+				</then>
+			</if>
+		</target>
+	<!-- End : XSV21-1529 Changes for Install Build Issue Config Path Base features property not updating -->
+	
+     <!--XA-1210 Create separate config path for LSE BOPC and NON-lead Start-->
+	  <target name="lev-update-lse-backoffice-config-path" >
+	    <loadproperties prefix="ORIGCONFIGPATHPROPS" srcFile="${install.dir}/configPath.properties">
+	      <filterchain>
+	        <linecontains>
+	          <contains value="xstore.config.path.global.extensions"/>
+	        </linecontains>
+	      </filterchain>
+	    </loadproperties>
+	    <echo message="Original Config Path : ${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" />
+	    <if>
+	      <!-- determine if a change needs to be made -->
+	      <and>
+	        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":regtype/backoffice"/>
+	        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":region/lse"/>
+	        <not>
+	          <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":regtype/lsebackoffice"/>
+	        </not>
+	      </and>
+	      <then>
+	        <echo message="LSE backofice config path needs to be updated." />
+	        <loadresource property="xstore.config.path.global.extensions.adjusted">
+	          <propertyresource name="ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions"/>
+	          <filterchain>
+	            <tokenfilter>
+	              <filetokenizer/>
+	              <replacestring from=":regtype/backoffice" to=":regtype/backoffice:regtype/lsebackoffice"/>
+	            </tokenfilter>
+	          </filterchain>
+	        </loadresource>
+	
+	        <echo message="New value: ${xstore.config.path.global.extensions.adjusted}" />
+	        <!-- put the adjusted entry in-place of the original -->
+	        <propertyfile file="${install.dir}/configPath.properties">
+	          <entry key="xstore.config.path.global.extensions"
+	                 value="${xstore.config.path.global.extensions.adjusted}"/>
+	        </propertyfile>
+	      </then>
+	    </if>
+	  </target>
+	  
+	  <target name="lev-update-lse-nonlead-config-path" >
+	    <loadproperties prefix="ORIGCONFIGPATHPROPS" srcFile="${install.dir}/configPath.properties">
+	      <filterchain>
+	        <linecontains>
+	          <contains value="xstore.config.path.global.extensions"/>
+	        </linecontains>
+	      </filterchain>
+	    </loadproperties>
+	    <echo message="Original Config Path : ${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" />
+	    <if>
+	      <!-- determine if a change needs to be made -->
+	      <and>
+	        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":regtype/nonlead"/>
+	        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":region/lse"/>
+	        <not>
+	          <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":regtype/lsenonlead"/>
+	        </not>
+	      </and>
+	      <then>
+	        <echo message="LSE nonlead config path needs to be updated." />
+	        <loadresource property="xstore.config.path.global.extensions.adjusted">
+	          <propertyresource name="ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions"/>
+	          <filterchain>
+	            <tokenfilter>
+	              <filetokenizer/>
+	              <replacestring from=":regtype/nonlead:" to=":regtype/nonlead:regtype/lsenonlead:"/>
+	            </tokenfilter>
+	          </filterchain>
+	        </loadresource>
+	
+	        <echo message="New value: ${xstore.config.path.global.extensions.adjusted}" />
+	        <!-- put the adjusted entry in-place of the original -->
+	        <propertyfile file="${install.dir}/configPath.properties">
+	          <entry key="xstore.config.path.global.extensions"
+	                 value="${xstore.config.path.global.extensions.adjusted}"/>
+	        </propertyfile>
+	      </then>
+	    </if>
+	  </target>
+	  
+	<!--XA-1210 Create separate config path for LSE BOPC and NON-lead End-->
+	
+	<!-- XA-1487 : apply permission script to all folders after xadmin deployment -->	
+	<target name="lev-run-permission-script" description="Lev run permission script">
+		<if>
+            <or>
+              <contains string="${install.type}" substring="upgrade" />
+              <contains string="${install.type}" substring="update" />
+            </or>
+			<then>
+				<echo message="Running script to update permission to folder" />
+				<exec executable="${basedir}/custom/lev-custom/lev_automation.bat" spawn="false" >
+						<arg value="${basedir}/custom/lev-custom/pwshAdmin.ps1" />
+						<arg value="${basedir}/custom/lev-custom/UpdateFolderPermission.ps1" />				
+				</exec>
+			</then>
+		</if>
+  	</target>
+	<!-- XA-1502 ORS activation for Poland -->
+	<!-- XA-1796 -->
+	<target name="update-PL-ORS-config-path" depends="isORSPathAlreadyUpdated" if="isPLORSExistInConfigPath">
+	    <loadproperties prefix="ORIGCONFIGPATHPROPS" srcFile="${install.dir}/configPath.properties">
+	      <filterchain>
+	        <linecontains>
+	          <contains value="xstore.config.path.global.extensions"/>
+	        </linecontains>
+	      </filterchain>
+	    </loadproperties>
+	    <echo message="Original Config Path : ${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" />
+			<if>
+				<equals arg1="PL" arg2="${xstp.dtv.location.CountryId}" casesensitive="false" trim="true" />
+				<then>
+					
+			        <loadresource property="xstore.config.path.global.extensions.adjusted">
+			          <propertyresource name="ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions"/>
+			          <filterchain>
+			            <tokenfilter>
+			              <filetokenizer/>
+			              <replacestring from=":country/pl" to=":country/pl${cxst.ORS}"/>
+			            </tokenfilter>
+			          </filterchain>
+			        </loadresource>
+					
+					<echo message="adding ORS in configpath ${xstore.config.path.global.extensions.adjusted} " />
+					<propertyfile file="${install.dir}/configPath.properties">
+						<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+					</propertyfile>
+				</then>
+			</if>
+	</target>
+	 
+	<target name="isORSPathAlreadyUpdated" if="isMailLineStore">
+			<condition property="isPLORSExistInConfigPath">
+				<not>
+					<contains string="${cpp.xstore.config.path.global.extensions}" substring="${cxst.ORS}" />
+				</not>
+			</condition>
+	</target>
+		<!-- RTF-337: Removed Duplicate Condition isMailLineStore -->	
+		<!-- ORS : End-->
+	
+	<!-- XA-1897 -->
+	<target name="lev-update-mobile-US-docker-config-path" >
+		    <loadproperties prefix="ORIGCONFIGPATHPROPS" srcFile="${xstore.mobile.install}/configPath.properties">
+		      <filterchain>
+		        <linecontains>
+		          <contains value="xstore.config.path.global.extensions"/>
+		        </linecontains>
+		      </filterchain>
+		    </loadproperties>
+		    <echo message="Original Config Path : ${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" />
+		    <if>
+		      <!-- determine if a change needs to be made -->
+		      <and>
+		        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":brand/lsadocker"/>
+		        <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":country/us"/>
+		        <not>
+		          <contains string="${ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions}" substring=":xstorem/bizfunc/lsaloyalty"/>
+		        </not>
+		      </and>
+		      <then>
+		        <echo message="US Mobile Docker config path needs to be updated." />
+		        <loadresource property="xstore.config.path.global.extensions.adjusted">
+		          <propertyresource name="ORIGCONFIGPATHPROPS.xstore.config.path.global.extensions"/>
+		          <filterchain>
+		            <tokenfilter>
+		              <filetokenizer/>
+		              <replacestring from=":bizfunc/lsaloyalty" to=":bizfunc/lsaloyalty:xstorem/bizfunc/lsaloyalty"/>
+		            </tokenfilter>
+		          </filterchain>
+		        </loadresource>
+		
+		        <echo message="New value: ${xstore.config.path.global.extensions.adjusted}" />
+		        <!-- put the adjusted entry in-place of the original -->
+		        <propertyfile file="${xstore.mobile.install}/configPath.properties">
+		          <entry key="xstore.config.path.global.extensions"
+		                 value="${xstore.config.path.global.extensions.adjusted}"/>
+		        </propertyfile>
+		      </then>
+		    </if>
+		  </target>
+	<!-- XA-1897: End -->
+	<!--XA-2097 PROD LSA Place a check for Keystore password value in xstore properties Start-->
+		<target name="lev-update-keystore-password" description="Update keystore password">	    
+		<if>
+			<and>
+				<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" />
+				<available file="${install.dir}/xstore.properties" />
+			</and>				
+			<then>
+			<loadproperties prefix="XSTP" srcFile="${install.dir}/xstore.properties"/>		
+				<if>
+					<equals arg1="${XSTP.dtv.keystore.password}" arg2="Pj4+MGE9NAH2A7jV1i33cwtkwbEKikDA" trim="true" casesensitive="false" />
+					<then>
+						<echo message="Keystore password configured in xstore/xstore.properties file is correct hence not updating properties " />
+					</then>
+					<else>
+						<propertyfile file="${install.dir}/xstore.properties" comment="Updating keystore password properties file for xstore">
+							<entry key="dtv.keystore.password" value="Pj4+MGE9NAH2A7jV1i33cwtkwbEKikDA" />
+						</propertyfile>	
+					</else>
+				</if>
+			</then>
+		 </if>
+		</target>
+	
+	
+		<target name="lev-update-mobile-keystore-password" description="Update keystore mobile password">	    	
+		<if>
+			<and>
+				<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" />
+				<available file="${xstore.mobile.install}/xstore.properties" />
+			</and>				
+			<then>	
+			<loadproperties prefix="MXSTP" srcFile="${xstore.mobile.install}/xstore.properties"/>	
+				<if>
+					<equals arg1="${MXSTP.dtv.keystore.password}" arg2="Pj4+MGE9NAH2A7jV1i33cwtkwbEKikDA" trim="true" casesensitive="false" />
+					<then>
+						<echo message="Keystore password configured in xstore-mobile/xstore.properties file is correct hence not updating properties " />			
+					</then>
+					<else>
+						<propertyfile file="${xstore.mobile.install}/xstore.properties" comment="Updating keystore password properties file for mobile">
+							<entry key="dtv.keystore.password" value="Pj4+MGE9NAH2A7jV1i33cwtkwbEKikDA" />
+						</propertyfile>
+					</else>
+				</if>
+			</then>
+		 </if>
+		</target>
+	<!--XA-2097 PROD LSA Place a check for Keystore password value in xstore properties End-->
+
+	
+	<!-- XA-2012 Update TSE propeties for Mobile -->
+		<target name="lev-xmobile-update-TSE-properties" description="Update TSE properties and set to  blank for mobile">	    	
+		<if>
+			<and>
+				<equals arg1="DE" arg2="${xstp.dtv.location.CountryId}" casesensitive="false" trim="true" />	
+				<available file="${xstore.mobile.install}/xstore_mobile.properties" />
+			</and>				
+			<then>	
+				<loadproperties prefix="XSTMobileP" srcFile="${xstore.mobile.install}/xstore_mobile.properties" />		
+				<if>
+					<equals arg1="${XSTMobileP.countrypack.de.tseStartDate}" arg2="" />				
+					<then>
+						<echo message="For Xmobile, TSE start date is already set to blank hence not updating countrypack.de.tseStartDate property"/>
+					</then>
+					<else>
+						<propertyfile file="${xstore.mobile.install}/xstore_mobile.properties" comment="Updating tse properties for mobile">
+							<entry key="countrypack.de.tseStartDate" value="" />
+						</propertyfile>	
+					</else>
+				</if>					
+			</then>
+		 </if>
+		</target>
+	  <!--Changes for XA-1826 start :- Target to be used to replace trustore file in update build -->
+	  <target name="lev-update-truststore" if="isUpdate" description="Update lev truststore file if provided">
+	    <if>
+	      <available file="${basedir}/custom/lev_update_truststore/.truststore" />
+	      <then>	    
+		    <tstamp>
+		      <format property="bak.date" pattern="dd-MM-yyyy" />
+		    </tstamp>
+	  	
+		    <if>
+		      <available file="${install.dir}/res/ssl/.truststore" />
+		      <then>
+			    <echo message="taking backup ${install.dir}/res/ssl_bak_${bak.date}" />
+			  	<mkdir dir="${install.dir}/res/ssl_bak_${bak.date}" />
+			    <copy todir="${install.dir}/res/ssl_bak_${bak.date}">
+			      <fileset dir="${install.dir}/res/ssl" />
+			    </copy>	      	
+		      	<echo message="Deploying .truststore file for xstore found at ${basedir}/custom/lev_update_truststore/.truststore to ${install.dir}/res/ssl/.truststore." />
+		      	<copy file="${basedir}/custom/lev_update_truststore/.truststore" tofile="${install.dir}/res/ssl/.truststore" verbose="true" overwrite="true"/>
+		      </then>
+		    </if>	  
+		  	
+		    <if>
+		      <available file="${xstore.mobile.install}/res/ssl/.truststore" />
+		      <then>
+			    <echo message="taking backup ${xstore.mobile.install}/res/ssl_bak_${bak.date}" />
+			  	<mkdir dir="${xstore.mobile.install}/res/ssl_bak_${bak.date}" />
+			    <copy todir="${xstore.mobile.install}/res/ssl_bak_${bak.date}">
+			      <fileset dir="${xstore.mobile.install}/res/ssl" />
+			    </copy>		      	
+		      	<echo message="Deploying .truststore file for xmobile found at ${basedir}/custom/lev_update_truststore/.truststore to ${xstore.mobile.install}/res/ssl/.truststore." />
+		      	<copy file="${basedir}/custom/lev_update_truststore/.truststore" tofile="${xstore.mobile.install}/res/ssl/.truststore" verbose="true" overwrite="true"/>
+		      </then>
+		    </if>	
+	      </then>
+	    </if>	      	
+	  </target>	  	
+	  <!--Changes for XA-1826 start-->
+	
+	<!--CHKOUT-68 Loyalty Poland : Target to update config path to enable Loyalty for IE -->
+	
+	<target name="update-lse-loyalty-config-path" if="isLoyaltyPresentInConfigPath" >
+		<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="lev.loyalty" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+		
+				<if>
+					<contains string="IE" substring="${xstp.dtv.location.CountryId}" casesensitive= "true"/>
+					<then>
+						<loadproperties prefix="ORIGCPPPROPS" srcFile="${install.dir}/configPath.properties">
+							<filterchain>
+								<linecontains>
+									<contains value="xstore.config.path.global.extensions"/>
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+						<echo message="Original: ${ORIGCPPPROPS.xstore.config.path.global.extensions}" />
+
+						<loadresource property="xstore.config.path.global.extensions.adjusted">
+							<propertyresource name="ORIGCPPPROPS.xstore.config.path.global.extensions"/>
+							<filterchain>
+								<tokenfilter>
+									<filetokenizer/>
+									<replacestring from=":idcs:idcs/relate" to=":bizfunc/lseloyalty:idcs:idcs/relate"/>
+								</tokenfilter>
+							</filterchain>
+						</loadresource>
+
+						<!-- put the adjusted entry in-place of the original -->
+						<propertyfile file="${install.dir}/configPath.properties">
+							<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+						</propertyfile>
+					</then>
+				</if>
+	</target>
+	
+	<condition property="isLoyaltyPresentInConfigPath">
+				<not>
+					<contains string="${cpp.xstore.config.path.global.extensions}" substring="/lseloyalty" casesensitive="true"/>
+				</not>
+			</condition>
+	
+	<target name="update-lse-mobile-loyalty-config-path" if="isLoyaltyPresentInMobileConfigPath" >
+		<loadproperties prefix="levProp" srcFile="${basedir}/custom/lev-deployment.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="lev.loyalty" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+		
+
+				<if>
+					<contains string="IE" substring="${xstp.dtv.location.CountryId}" casesensitive= "true"/>
+					<then>
+						<loadproperties prefix="ORIGCPPPROPS" srcFile="${xstore.mobile.install}/configPath.properties">
+							<filterchain>
+								<linecontains>
+									<contains value="xstore.config.path.global.extensions"/>
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+						<echo message="Original: ${ORIGCPPPROPS.xstore.config.path.global.extensions}" />
+
+						<loadresource property="xstore.config.path.global.extensions.adjusted">
+							<propertyresource name="ORIGCPPPROPS.xstore.config.path.global.extensions"/>
+							<filterchain>
+								<tokenfilter>
+									<filetokenizer/>
+									<replacestring from=":idcs:idcs/relate" to=":bizfunc/lseloyalty:xstorem/bizfunc/lseloyalty:idcs:idcs/relate"/>
+								</tokenfilter>
+							</filterchain>
+						</loadresource>
+
+						<!-- put the adjusted entry in-place of the original -->
+						<propertyfile file="${xstore.mobile.install}/configPath.properties">
+							<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+						</propertyfile>
+					</then>
+				</if>
+		</target>
+	
+	<condition property="isLoyaltyPresentInMobileConfigPath">
+				<not>
+					<contains string="${mcpp.xstore.config.path.global.extensions}" substring="/lseloyalty" casesensitive="true"/>
+				</not>
+			</condition>
+	
+	<!--CHKOUT-68 Loyalty Poland : Target to update config path to enable Loyalty for IE-->
+	
+	<!--CHKOUT-363 : [LSA][US][CA] Loyalty - Redeem Benefits Target to update config path to enable Loyalty for CA Start-->
+	<target name="update-lsa-loyalty-config-path" if="isLsaLoyaltyPresentInConfigPath">
+		<echo>***running target update-lsa-loyalty-config-path updating lead path***</echo>
+		<if>
+			<contains string="CA" substring="${xstp.dtv.location.CountryId}" casesensitive= "true"/>
+			<then>
+				<loadproperties prefix="ORIGCPPPROPS" srcFile="${install.dir}/configPath.properties">
+					<filterchain>
+						<linecontains>
+							<contains value="xstore.config.path.global.extensions"/>
+						</linecontains>
+					</filterchain>
+				</loadproperties>
+				<echo message="Original: ${ORIGCPPPROPS.xstore.config.path.global.extensions}" />
+
+				<loadresource property="xstore.config.path.global.extensions.adjusted">
+					<propertyresource name="ORIGCPPPROPS.xstore.config.path.global.extensions"/>
+					<filterchain>
+						<tokenfilter>
+							<filetokenizer/>
+							<replacestring from=":country/ca" to=":country/ca:bizfunc/lsaloyalty"/>
+						</tokenfilter>
+					</filterchain>
+				</loadresource>
+
+				<!-- put the adjusted entry in-place of the original -->
+				<propertyfile file="${install.dir}/configPath.properties">
+					<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+				</propertyfile>
+			</then>
+		</if>
+	</target>
+
+	<condition property="isLsaLoyaltyPresentInConfigPath">
+		<not>
+			<contains string="${cpp.xstore.config.path.global.extensions}" substring="/lsaloyalty" casesensitive="true"/>
+		</not>
+	</condition>
+	
+	<target name="update-lsa-mobile-loyalty-config-path" if="isLsaLoyaltyPresentInMobileConfigPath">
+		<echo>***running target update-lsa-mobile-loyalty-config-path updating lead path***</echo>
+		<if>
+			<contains string="CA" substring="${xstp.dtv.location.CountryId}" casesensitive= "true"/>
+			<then>
+				<loadproperties prefix="ORIGCPPPROPS" srcFile="${xstore.mobile.install}/configPath.properties">
+					<filterchain>
+						<linecontains>
+							<contains value="xstore.config.path.global.extensions"/>
+						</linecontains>
+					</filterchain>
+				</loadproperties>
+				<echo message="Original: ${ORIGCPPPROPS.xstore.config.path.global.extensions}" />
+
+				<loadresource property="xstore.config.path.global.extensions.adjusted">
+					<propertyresource name="ORIGCPPPROPS.xstore.config.path.global.extensions"/>
+					<filterchain>
+						<tokenfilter>
+							<filetokenizer/>
+							<replacestring from=":xstorem/ca" to=":xstorem/ca:bizfunc/lsaloyalty:xstorem/bizfunc/lsaloyalty"/>
+						</tokenfilter>
+					</filterchain>
+				</loadresource>
+
+				<!-- put the adjusted entry in-place of the original -->
+				<propertyfile file="${xstore.mobile.install}/configPath.properties">
+					<entry key="xstore.config.path.global.extensions" value="${xstore.config.path.global.extensions.adjusted}" />
+				</propertyfile>
+			</then>
+		</if>
+	</target>
+
+	<condition property="isLsaLoyaltyPresentInMobileConfigPath">
+		<not>
+			<contains string="${mcpp.xstore.config.path.global.extensions}" substring="/lsaloyalty" casesensitive="true"/>
+		</not>
+	</condition>	
+	<!--CHKOUT-363 : [LSA][US][CA] Loyalty - Redeem Benefits Target to update config path to enable Loyalty for CA End-->
+		<!--SOLAR R3.1-->
+	<target name="lev-update-xstore-property" if="isCountrySAMEA" description="updating properties file">
+		<echo message="Updating shipping properties in xstore.properties and xstore_mobile.properties and xstore_${xstp.dtv.location.CountryId}.properties" />								
+						<echo message="Running script to Update shipping properties" />
+						<exec executable="${basedir}/custom/lev-custom/update_ship_prop.bat" spawn="false" >
+							<arg value="${basedir}/custom/lev-custom/updateShippingProperties.ps1" />
+							<arg value="${xstp.dtv.location.CountryId}" />
+						</exec>			
+	</target>
+	    	<condition property="isCountrySAMEA">
+			    <or>
+				<contains string="${xstp.dtv.location.CountryId}" substring="PK" />
+				<contains string="${xstp.dtv.location.CountryId}" substring="IN" />
+				<contains string="${xstp.dtv.location.CountryId}" substring="ZA" />
+                </or>				
+			</condition>
+	
+		<!--Changes for CHKOUT-389 start :- Target to be used to replace tpgjavapos file in install/update build -->
+		  <target name="lev-update-tpgjavapos-jar" description="Update tpgjavapos jar file for CN">
+		    <if>
+		      <equals arg1="CN" arg2="${xstp.dtv.location.CountryId}" casesensitive="false" trim="true" />
+		      <then>
+		      	<if>
+		      	  <available file="${install.dir}/lib/ext/hpprinter/cnh300c/tpgjavapos-3.0.jar" />
+		      	  <then>
+					<echo message="Deploying tpgjavapos-3.0.jar file for Xstore from ${install.dir}/lib/ext/hpprinter/cnh300c/tpgjavapos-3.0.jar to ${install.dir}/lib/patch/tpgjavapos-3.0.jar" />
+				    <copy file="${install.dir}/lib/ext/hpprinter/cnh300c/tpgjavapos-3.0.jar" tofile="${install.dir}/lib/patch/tpgjavapos-3.0.jar" verbose="true" overwrite="true"/>
+				  	
+				    <if>
+				      <available file="${xstore.mobile.install}/lib/tpgjavapos.jar" />
+				      <then>
+					    <echo message="Deploying tpgjavapos-3.0.jar file for xmobile from ${install.dir}/lib/ext/hpprinter/cnh300c/tpgjavapos-3.0.jar to ${xstore.mobile.install}/lib/patch/tpgjavapos-3.0.jar" />
+				      	<copy file="${install.dir}/lib/ext/hpprinter/cnh300c/tpgjavapos-3.0.jar" tofile="${xstore.mobile.install}/lib/patch/tpgjavapos-3.0.jar" verbose="true" overwrite="true"/>
+				      </then>
+				    </if>	
+		      	  </then>
+		      	</if>
+		      </then>
+		    </if>	      	
+		  </target>	  	
+		  <!-- Changes for CHKOUT-389 end -->
+			
+</project>
+

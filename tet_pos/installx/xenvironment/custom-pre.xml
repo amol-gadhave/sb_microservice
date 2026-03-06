@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: custom-pre.xml 444 2020-07-10 01:26:03Z dtvdomain\skaila $ -->
+<!-- $URL: https://dtvsource/remote-svn/cst_template/branches/7.0.1/pos/installx/pos/custom-pre.xml $ -->
+<project name="custom pre-install tasks" default="run-tasks-pre" basedir=".">
+
+	<property file="${install.dir}/updates/base-xstore.properties" prefix="bxstp" />
+
+	<target name="run-tasks-pre" description="Master target that calls other targets in order.">
+		
+		<antcall target="lev-run-autologon-script" /><!-- XA-1657 Global  Merging Autologon and permission script -->
+        <antcall target="lev-run-permission-script" /><!-- XA-1657 Global  Merging Autologon and permission script -->
+		<antcall target="lev-disable-xservices" /> 	<!--XA-1338 Disable Xservices-->
+		<antcall target="lev-update-polling-url-credentials" /> <!-- XA-1458 Configure polling URL if it is missing, need to comment this target once all the region on xstore versions on v21.0.3 -->
+		<antcall target="lev-update-err-marker-properties" /> <!--XA-1685 Regression | LSE-FI| : Restart Xenvironment Button Is Not Working -->
+		<antcall target="lev-update-gui-disabled-property" /> <!-- XA-1458 Configure polling URL if it is missing, need to comment this target once all the region on xstore versions on v21.0.3 -->
+	</target>
+	
+	<!--XA-1685 Regression | LSE-FI| : Restart Xenvironment Button Is Not Working -->
+	<target name="lev-update-err-marker-properties" description="Update error marker related properties in environment properties ">	 
+
+		<if>
+			<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" /> <!--XA-2015 XEnvironment Install Build Installation is failing-->
+			<then>	
+				<loadproperties prefix="ENVP" srcFile="${install.dir}/cust_config/version1/environment.properties"/>	
+				<if>
+					<and>
+						<available file="${install.dir}/cust_config/version1/environment.properties" />
+						<or>
+							<not>
+								<containsproperty propertyfile="${install.dir}/cust_config/version1/environment.properties" propertyname="lev.environment.err.markers.comma.separated.list" />
+							</not>
+							<not>
+								<containsproperty propertyfile="${install.dir}/cust_config/version1/environment.properties" propertyname="lev.environment.err.markers.delete.on.restart" />
+							</not>
+						</or>
+					</and>
+					<then>			
+						<echo message="Updating error marker related properties " />
+						<propertyfile file="${install.dir}/cust_config/version1/environment.properties">
+							<entry key="lev.environment.err.markers.comma.separated.list" value="close.err,download-close-deployments.err,upload-pospolls.err,startup.err,check-and-download-updates.err,update.err,SHRINK_ERR.err,pollchain.err" />
+							<entry key="lev.environment.err.markers.delete.on.restart" value="true" />				
+						</propertyfile>
+					</then>
+				</if>
+			</then>
+		</if>	
+	</target>
+				
+	
+	<!--XA-1338 Disable Xservices-->
+	<target name="lev-disable-xservices" description="Disable Xservices">    
+		<if>
+			<and>
+				<available file="${install.dir}/updates/base-xstore.properties" />
+				<equals arg1="false" arg2="${bxstp.installx.xservices_disabled}" casesensitive="false" trim="true" />
+			</and>	
+			<then>			
+			    <echo message="Updating base xstore properties file to disable xservices installx.xservices_disabled=true " />
+				<propertyfile file="${install.dir}/updates/base-xstore.properties">
+					<entry key="installx.xservices_disabled" value="true" />
+				</propertyfile>
+			</then>
+		</if>
+	</target>
+	
+	<!-- XA-1458 Configure polling URL if it is missing, need to comment this target once all the region on xstore versions on v21.0.3-->
+	<target name="lev-update-polling-url-credentials" description="Update polling related properties in base xstore properties file" >	    
+		<if>
+			<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" /> <!--XA-2015 XEnvironment Install Build Installation is failing-->
+			<then>
+				<loadproperties prefix="ORIGXSTP" srcFile="${install.dir}/../xstore/xstore.properties"/>
+				<loadproperties prefix="BXSTP" srcFile="${install.dir}/updates/base-xstore.properties"/>
+				
+				<if>
+					<and>
+						<available file="${install.dir}/../xstore/xstore.properties" />
+						<available file="${install.dir}/updates/base-xstore.properties" />
+					</and>
+					<then>
+						<switch value="${ORIGXSTP.xcenter.host}">
+					
+							<case value="xofficelsav21.levi.com">
+								<propertyfile file="${install.dir}/updates/base-xstore.properties" comment="Updating polling configuration for LSA">
+									<entry key="installx.uploadHttpServerURL" value="https://xofficelsav21.levi.com:443" />
+									<entry key="installx.uploadHttpServerUsername" value="Pj4+MGE9NAEdaKiuaFGiOzMVzmtN+gfR" />
+									<entry key="installx.uploadHttpServerPassword" value="Pj4+MGE9NAFJUT65OATkjhI99ff1MtvK" />
+								</propertyfile>
+								<echo message="Updated pollling URL, username and password for region LSA" />
+							</case>
+							<case value="xofficelsev21.levi.com">
+								<propertyfile file="${install.dir}/updates/base-xstore.properties" comment="Updating polling configuration for LSE">
+									<entry key="installx.uploadHttpServerURL" value="https://xofficelsev21.levi.com:443" />
+									<entry key="installx.uploadHttpServerUsername" value="Pj4+MGE9NAEdaKiuaFGiOzMVzmtN+gfR" />
+									<entry key="installx.uploadHttpServerPassword" value="Pj4+MGE9NAHOW7LYCicql3itfbicsdPD" />
+								</propertyfile>
+								<echo message="Updated pollling URL, username and password for region LSE" />
+
+							</case>
+							<case value="xofficeamav21.levi.com">
+								<propertyfile file="${install.dir}/updates/base-xstore.properties" comment="Updating polling configuration for AMA">
+									<entry key="installx.uploadHttpServerURL" value="https://xofficeamav21.levi.com:443" />
+									<entry key="installx.uploadHttpServerUsername" value="Pj4+MGE9NAEdaKiuaFGiOzMVzmtN+gfR" />
+									<entry key="installx.uploadHttpServerPassword" value="Pj4+MGE9NAE31d+2sAW947BR6Wg1col6" />
+								</propertyfile>
+								<echo message="Updated pollling URL, username and password for region AMA" />
+							</case>					
+							
+						</switch>
+					</then>
+					<else>
+						<echo message="Polling upload URL, username and password is not updated in updates/base-xstore.properties, either xstore.properties file is not present or all the polling upload properties are already set " />
+					</else>
+				</if>
+			</then>
+		</if>
+	</target>
+	<!-- XA-1458 Configure polling URL if it is missing -->
+	
+	<!-- XA-1487 : apply permission script to all folders after xadmin deployment -->	
+	<target name="lev-run-permission-script" description="Lev run permission script">
+		<if>
+            <or>
+              <contains string="${install.type}" substring="upgrade" />
+              <contains string="${install.type}" substring="update" />
+            </or>
+			<then>
+				<echo message="Running script to update permission to folder" />
+				<exec executable="${basedir}/custom/lev-custom/lev_automation.bat" spawn="false" >
+						<arg value="${basedir}/custom/lev-custom/pwshAdmin.ps1" />
+						<arg value="${basedir}/custom/lev-custom/UpdateFolderPermission.ps1" />				
+				</exec>
+			</then>
+		</if>
+  	</target>
+	<!-- XA-1487 : apply permission script to all folders after xadmin deployment -->	
+	<target name="lev-run-autologon-script" description="Lev run auto logon script">
+		<if>
+            <or>
+              <contains string="${install.type}" substring="upgrade" />
+              <contains string="${install.type}" substring="update" />
+            </or>
+			<then>
+				<echo message="Running script to autologon" />
+				<exec executable="${basedir}/custom/lev-custom/lev_automation.bat" spawn="false" >
+						<arg value="${basedir}/custom/lev-custom/pwshAdmin.ps1" />
+						<arg value="${basedir}/custom/lev-custom/AutoLogon.ps1" />				
+				</exec>
+			</then>
+		</if>
+  	</target>
+	
+	
+	<!-- XA-1532 GUI disable for US BOPC on environment build -->
+	<target name="lev-update-gui-disabled-property" description="Update GUI disabled property for US BOPC">	    
+		
+		<if>
+			<and>
+				<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" />	
+				<available file="${install.dir}/cust_config/version1/environment.properties" />
+				<available file="${install.dir}/updates/base-xstore.properties" />
+			</and>				
+			<then>
+			<loadproperties prefix="BXSTP" srcFile="${install.dir}/updates/base-xstore.properties"/>	
+			<loadproperties prefix="ENVPROP" srcFile="${install.dir}/cust_config/version1/environment.properties"/>	
+				<if>
+					<and>
+						<equals arg1="${ENVPROP.environment.gui.disabled}" arg2="true" trim="true" casesensitive="false" />
+						<equals arg1="${BXSTP.installx.guiDisabled}" arg2="false" trim="true" casesensitive="false" />						
+					</and>
+					<then>
+						<propertyfile file="${install.dir}/updates/base-xstore.properties" comment="Updating gui disabled properties to true">
+							<entry key="installx.guiDisabled" value="true" />
+						</propertyfile>			
+					</then>
+					<else>
+						<echo message="Property file is not updated as value of environment.gui.disabled  property is matching with installx.guiDisabled propety in base xstore properties  " />
+					</else>
+				</if>
+			</then>
+		 </if>
+		</target>
+		<!-- XA-1532 GUI disable for US BOPC on environment build -->
+	
+</project>

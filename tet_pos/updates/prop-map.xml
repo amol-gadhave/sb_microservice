@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<propmap basedirectory="@baseDir@">
+<prop name="lev.sourceTXTArch.folder" location="system.properties" property="lev.sourceTXTArch.folder"/>
+<prop name="lev.sourceTXT.folder" location="system.properties" property="lev.sourceTXT.folder"/>
+<prop name="lev.levcount.filename" location="system.properties" property="lev.levcount.filename"/>
+<prop name="lev.levcount.section.start" location="system.properties" property="lev.levcount.section.start"/>
+<prop name="lev.levcount.section.end" location="system.properties" property="lev.levcount.section.end"/>
+<prop name="lev.levcount.sku.start" location="system.properties" property="lev.levcount.sku.start"/>
+<prop name="lev.levcount.sku.end" location="system.properties" property="lev.levcount.sku.end"/>
+<prop name="lev.levcount.qty.start" location="system.properties" property="lev.levcount.qty.start"/>
+<prop name="lev.levcount.qty.end" location="system.properties" property="lev.levcount.qty.end"/>
+<prop name="lev.levcount.sleepinterval" location="system.properties" property="lev.levcount.sleepinterval"/>
+<prop name="lev.levcount.file.minlinelength" location="system.properties" property="lev.levcount.file.minlinelength"/>
+<prop name="lev.rejectFolder.folder" location="system.properties" property="lev.rejectFolder.folder"/>
+<prop name="lev.file.extnsn" location="system.properties" property="lev.file.extnsn"/>
+<prop name="dtv.location.primaryTerminalNumber" location="system.properties" property="dtv.location.primaryTerminalNumber"/>
+
+<prop name="lev.ecomorder.mule.testservice.url" location="system.properties" property="lev.ecomorder.mule.testservice.url"/>
+<prop name="lev.ecomorder.mule.testservice.timeout" location="system.properties" property="lev.ecomorder.mule.testservice.timeout"/>
+<prop name="lev.ecomorder.mule.testservice.username" location="system.properties" property="lev.ecomorder.mule.testservice.username"/>
+<prop name="lev.ecomorder.mule.testservice.password" location="system.properties" property="lev.ecomorder.mule.testservice.password"/>
+<prop name="dtv.relate.EcomGiftCardPrefix" location="system.properties" property="dtv.relate.EcomGiftCardPrefix"/>
+<prop name="dtv.relate.EcomGiftCardSeries" location="system.properties" property="dtv.relate.EcomGiftCardSeries"/>
+<prop name="dtv.relate.EcomGiftCard.SecurityUserId" location="system.properties" property="dtv.relate.EcomGiftCard.SecurityUserId"/>
+<prop name="lev.aos.order.item.facilityType" location="system.properties" property="lev.aos.order.item.facilityType"/><!-- XSA-167 change -->
+<prop name="lev.aos.order.storefulfilled.facilityType" location="system.properties" property="lev.aos.order.storefulfilled.facilityType"/><!-- XSA-167 change -->
+<prop name="lev.ordervalidation.prodservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.ordervalidation.prodservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />		
+
+	<prop name="lev.ordervalidation.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordervalidation.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_SUBMIT_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordersubmit.prodservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_SUBMIT_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.ordersubmit.prodservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_SUBMIT_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />		
+
+	<prop name="lev.ordersubmit.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_SUBMIT_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordersubmit.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_ORDER_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+	
+
+
+	<prop name="lev.ordervalidation.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordervalidation.testservice.user" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordervalidation.testservice.password" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordervalidation.prodservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_PROD']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordervalidation.prodservice.user" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordervalidation.prodservice.password" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<!-- Order Submit -->
+
+	<prop name="lev.ordersubmit.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordersubmit.testservice.user" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordersubmit.testservice.password" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordersubmit.prodservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_PROD']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.ordersubmit.prodservice.user" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.ordersubmit.prodservice.password" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_ORDER_SUBMIT_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.validation.process.responsecode" location="system.properties" property="lev.validation.process.responsecode"/>
+	<prop name="lev.validation.error.responsecode" location="system.properties" property="lev.validation.error.responsecode"/>
+	<prop name="lev.xcommerce.items.list" location="system.properties" property="lev.xcommerce.items.list"/>
+	
+	<prop name="dtv.data2.access.impl.PersistenceConstants.manageCase" location="system.properties" property="dtv.data2.access.impl.PersistenceConstants.manageCase"/>
+	
+	<prop name="dtv.pricing2.PriceProvider" location="system.properties" property="dtv.pricing2.PriceProvider"/>
+	
+<!-- 	<prop name="lev.kronos.URL" -->
+<!--       location="country/us/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::KRONOS']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/>   -->
+
+<!--XSS-155 Xstore Embedded Browser from Internet Explorer to Microsoft Edge changes started -->
+<prop name="lev.kronos.URL"
+      location="region/lsa/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_KRONOS']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      
+  <prop name="lev.zipper.URL"
+      location="region/lsa/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_ZIPPER']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      
+  <prop name="lev.pocket.URL"
+      location="region/lsa/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_POCKET']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      <!--XSA-614 changes starts-->
+       <prop name="lev.yobic.URL"
+      location="region/lsa/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_YOOBIC']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+	  <!--XSA-614 changes end-->
+      <prop name="lev.dockbrowseroracle.URL"
+      location="brand/lsadocker/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_BROWSER']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+	  
+	  <prop name="lev.dockbrowserbrowser.URL"
+      location="brand/lsadocker/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_BROWSER']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+	  
+	   <prop name="lev.lsabrowseroracle.URL"
+      location="brand/lsalevi/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_BROWSER']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+	  
+	  <prop name="lev.lsabrowserbrowser.URL"
+      location="brand/lsalevi/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_BROWSER']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      <!--XSS-155 Xstore Embedded Browser from Internet Explorer to Microsoft Edge changes end -->
+      
+      <!--XSS-159 Contactless Returns Browser Option in Xstore changes start-->
+      <prop name="lev.contactlessreturn.URL"
+      location="brand/lsalevi/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_CONTACTLESSRETURN']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      <!--XSS-159 Contactless Returns Browser Option in Xstore changes end-->
+      
+       <!-- XSS-99 Retail Techstop integration with X-store changes started -->
+      <prop name="lev.lsaretailtechstop.URL"
+      location="region/lsa/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_RETAIL_TECHSTOP']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+       <!-- XSS-99 Retail Techstop integration with X-store changes end -->
+      
+	
+    <!--XSTORE-4387 changes-->
+<!--     <prop name="lev.zipper.URL" -->
+<!--       location="region/lsa/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::ZIPPER']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/>  -->
+	  
+	  <prop name="lev.pinpad.ip" location="system.properties" property="lev.pinpad.ip"/>
+	  
+	  	<prop name="lev.fis.prodservice.url" location="region/lsa/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='INVT_REST_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+		<prop name="lev.fis.prodservice.timeout" location="region/lsa/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='INVT_REST_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+		<prop name="lev.fis.prodservice.user" location="region/lsa/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_INVT_SERVICE_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+		<prop name="lev.fis.prodservice.password" location="region/lsa/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_INVT_SERVICE_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+		<prop name="lev.fis.testservice.url" location="region/lsa/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='INVT_REST_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+		<prop name="lev.fis.testservice.timeout" location="region/lsa/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='INVT_REST_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+		<prop name="lev.fis.testservice.user" location="region/lsa/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_INVT_SERVICE_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+		<prop name="lev.fis.testservice.password" location="region/lsa/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_INVT_SERVICE_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+		
+		 <prop name="lev.aos.envType" location="system.properties" property="lev.aos.envType"/>
+		 <prop name="avalara.tax.prod.username" location="system.properties" property="avalara.tax.prod.username"/>
+		 <prop name="avalara.tax.prod.password" location="system.properties" property="avalara.tax.prod.password"/>
+	     <prop name="avalara.tax.test.username" location="system.properties" property="avalara.tax.test.username"/>
+		 <prop name="avalara.tax.test.password" location="system.properties" property="avalara.tax.test.password"/>
+		 <prop name="avalara.tax.prod.url" location="system.properties" property="avalara.tax.prod.url"/>
+		 <prop name="avalara.tax.test.url" location="system.properties" property="avalara.tax.test.url"/>
+		 <!--XSTORE-1771  Removing Hardware brands from Config Paths starts-->
+		 <prop name="hardware.cashdrawer"
+			  location="version1/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='CashDrawer']/name"
+			  jarfile="lib/lev-config.jar" />
+		<prop name="hardware.printer"
+			  location="version1/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='POSPrinter']/name"
+			  jarfile="lib/lev-config.jar" />
+		<prop name="hardware.customerdisplay"
+			  location="version1/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='CustomerDisplay']/name"
+			  jarfile="lib/lev-config.jar" />
+		<prop name="hardware.scanner"
+			  location="version1/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='Scanner']/name"
+			  jarfile="lib/lev-config.jar" />
+<!--XSTORE-1771 Removing Hardware brands from Config Paths end-->
+
+<!-- Auth Token Entry -->
+<prop name="lev.getauth.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AUTHENTICATION_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getauth.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AUTHENTICATION_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getauth.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_AUTHENTICATION_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />	
+		
+		
+	<!-- START :XSTORE- 4407 GetAvailability call for QA-->
+	<prop name="lev.getavailability.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVAILABILITY_REST_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getavailability.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVAILABILITY_REST_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getavailability.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_AVAILABILITY_REST_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />	
+	<!-- END :XSTORE- 4407 GetAvailability call for QA-->	
+	
+	<!-- START :XSTORE- 4261 AVS API for QA-->
+		<prop name="lev.getavs.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVS_REST_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getavs.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVS_REST_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getavs.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_AVS_REST_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+	<!-- END :XSTORE- 4261 AVS API for QA-->
+	
+	<!-- START :XSTORE- 4388 OMS order reservation call for QA-->	
+	<prop name="lev.getomsreservation.testservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_OMS_RESERVATION_REST_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getomsreservation.testservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_OMS_RESERVATION_REST_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getomsreservation.testservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_OMS_RESERVATION_REST_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+	<!-- END :XSTORE- 4388 OMS order reservation call for QA-->
+		
+	<!-- START :XSTORE- 4407 GetAvailability call for Prod -->
+	<prop name="lev.getavailability.prodservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVAILABILITY_REST_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getavailability.prodservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVAILABILITY_REST_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getavailability.prodservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_AVAILABILITY_REST_PROD']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+	<!-- END :XSTORE- 4407 GetAvailability call for Prod -->
+	
+	 <!-- START :XSTORE- 4261 AVS API Prod-->
+		<prop name="lev.getavs.prodservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVS_REST_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getavs.prodservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_AVS_REST_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getavs.prodservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_AVS_REST_PROD']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+	 <!-- END :XSTORE- 4261 AVS API Prod-->
+	 
+	  <!-- START :XSTORE- 4388 OMS order reservation call Prod-->	
+	<prop name="lev.getomsreservation.prodservice.url" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_OMS_RESERVATION_REST_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.getomsreservation.prodservice.timeout" location="bizfunc/aos/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_OMS_RESERVATION_REST_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.getomsreservation.prodservice.path" location="bizfunc/aos/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_OMS_RESERVATION_REST_PROD']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+	  <!-- END :XSTORE- 4388 OMS order reservation call Prod-->
+	  
+	  <!-- START: XSTORE -4407,4261,4388 - AOS -SFS Error Codes -->
+	<prop name="lev.aosorder.error.responsecode" location="system.properties" property="lev.aosorder.error.responsecode"/>
+	 <!-- END: XSTORE -4407,4261,4388 - AOS -SFS Error Codes -->
+	 
+	 <prop name="lev.aos.order.targetvalue" location="system.properties" property="lev.aos.order.targetvalue"/>
+	 <prop name="lev.fis.regioncode.value" location="system.properties" property="lev.fis.regioncode.value"/>
+	 <prop name="lev.aos.order.responseType" location="system.properties" property="lev.aos.order.responseType"/>
+	 
+<!-- 	 <prop name="lev.pocket.URL" -->
+<!--       location="region/lsa/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::POCKET']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/>  -->
+	  
+<!-- 	  <prop name="lev.dockbrowseroracle.URL" -->
+<!--       location="brand/lsadocker/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::ORACLE']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/> -->
+	  
+<!-- 	  <prop name="lev.dockbrowserbrowser.URL" -->
+<!--       location="brand/lsadocker/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::BROWSER']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/> -->
+	  
+<!-- 	   <prop name="lev.lsabrowseroracle.URL" -->
+<!--       location="brand/lsalevi/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::ORACLE']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/> -->
+	  
+<!-- 	  <prop name="lev.lsabrowserbrowser.URL" -->
+<!--       location="brand/lsalevi/ActionConfig.xml" -->
+<!--       xpath="/ActionSet/Action[@name='BROWSER::BROWSER']/Parameter[@name='url']/@value" -->
+<!--       jarfile="lib/lev-config.jar"/> -->
+	  
+	 <prop name="lev.ussfs.URL"
+      location="country/us/ActionConfig.xml"
+      xpath="/ActionSet/Action[@name='BROWSER::SFS']/Parameter[@name='url']/@value"
+      jarfile="lib/lev-config.jar"/>
+	 
+	 	 <!--Xstore-5274 Start -->
+	 <prop name="dtv.docbuilding.DocBuilderFieldFactory" location="system.properties" property="dtv.docbuilding.DocBuilderFieldFactory"/>
+	 <!--Xstore-5274 End -->
+	 
+	  <!--Global Blue Start -->
+	 <prop name="oracle.retail.xstore.taxfree.globalblue.host" location="system.properties" property="oracle.retail.xstore.taxfree.globalblue.host"/>
+	 <prop name="oracle.retail.xstore.taxfree.globalblue.ws.host" location="system.properties" property="oracle.retail.xstore.taxfree.globalblue.ws.host"/>
+	 <prop name="oracle.retail.xstore.taxfree.globalblue.ui" location="system.properties" property="oracle.retail.xstore.taxfree.globalblue.ui"/>
+	 <prop name="oracle.retail.xstore.taxfree.credential.extra" location="system.properties" property="oracle.retail.xstore.taxfree.credential.extra"/>
+	 <!--Global Blue End -->
+	 <!--Xstore-5274 Start -->
+	 <prop name="countrypack.de.tseStartDate" location="system.properties" property="countrypack.de.tseStartDate"/>
+	 <!--Xstore-5274 End -->
+	 <!--Xstore-5222 Start -->
+	 <prop name="countrypack.it.promptForCustomerLotteryCodeDateStart" location="system.properties" property="countrypack.it.promptForCustomerLotteryCodeDateStart"/>
+	 <prop name="countrypack.it.promptForCustomerLotteryCodeDateEnd" location="system.properties" property="countrypack.it.promptForCustomerLotteryCodeDateEnd"/>
+	 <!--Xstore-5222 end -->
+     <!--XSTORE-5719 Start-->
+	 <prop name="countrypack.it.rt20DateStart" location="system.properties" property="countrypack.it.rt20DateStart"/>
+	 <prop name="countrypack.it.alertForZreportIssuing" location="system.properties" property="countrypack.it.alertForZreportIssuing"/>
+	 <prop name="countrypack.it.alertForZreportMinutes" location="system.properties" property="countrypack.it.alertForZreportMinutes"/>
+	 <!--XSTORE-5719 End-->
+
+	<!-- Xstore - 5654 : Invoice Url Config for Mexico start-->
+      <prop name="lev.invoice.URL"
+      location="country/mx/ActionConfig.xml"      
+      xpath="/ActionSet/Action[@name='BROWSER::INVOICE']/Parameter[@name='url']/@value"
+      jarfile="lib/lev-config.jar"/> 
+      <!-- Xstore - 5654 : Invoice Url Config for Mexico end-->
+      
+      <!-- Mexico CFDI configs -->
+      <prop name="countrypack.mx.cfdi.originalStringTransformerLocation" location="system.properties" property="countrypack.mx.cfdi.originalStringTransformerLocation"/>
+	  <prop name="countrypack.mx.cfdi.tfd.originalStringTransformerLocation" location="system.properties" property="countrypack.mx.cfdi.tfd.originalStringTransformerLocation"/>
+	  <prop name="countrypack.mx.cfdi.resultFiles.path" location="system.properties" property="countrypack.mx.cfdi.resultFiles.path"/>
+	  <prop name="countrypack.mx.cfdi.genericCustomerRFC" location="system.properties" property="countrypack.mx.cfdi.genericCustomerRFC"/>
+	  <prop name="countrypack.mx.globalInvoice.mockItemId" location="system.properties" property="countrypack.mx.globalInvoice.mockItemId"/>
+	  <prop name="CP.MX.WSJaxWsServicePort" location="system.properties" property="CP.MX.WSJaxWsServicePort"/>
+	  <prop name="countrypack.mx.cfdi.customerTruststorePath" location="system.properties" property="countrypack.mx.cfdi.customerTruststorePath"/>
+	  <prop name="countrypack.mx.cfdi.trustStorePassword" location="system.properties" property="countrypack.mx.cfdi.trustStorePassword"/>
+	  <prop name="countrypack.mx.globalInvoice.retryValidHours" location="system.properties" property="countrypack.mx.globalInvoice.retryValidHours"/>
+	  
+	   <!-- Austria Global Trust Proprty Setup Start-->
+	  <prop name="countrypack.at.globaltrust.endpoint" location="system.properties" property="countrypack.at.globaltrust.endpoint"/>
+	  <prop name="countrypack.at.globaltrust.ws.companyGUID" location="system.properties" property="countrypack.at.globaltrust.ws.companyGUID"/>
+	  <prop name="countrypack.at.globaltrust.ws.user" location="system.properties" property="countrypack.at.globaltrust.ws.user"/>
+	  <prop name="countrypack.at.globaltrust.ws.password" location="system.properties" property="countrypack.at.globaltrust.ws.password"/>
+	  <prop name="countrypack.at.isTest" location="system.properties" property="countrypack.at.isTest"/>
+	  <prop name="countrypack.at.ZDA" location="system.properties" property="countrypack.at.ZDA"/>
+	  <prop name="countrypack.at.fileExportPath" location="system.properties" property="countrypack.at.fileExportPath"/>
+	  <!--Austria Global Trust Proprty Setup End -->
+	  
+	  <prop name="lev.levcount.countsessionavailability" location="system.properties" property="lev.levcount.countsessionavailability"/>
+	
+	  <!-- XSS-99 - Retail Techstop Integration - Start -->  <!-- XSS-270 commented -->
+	 <!--  <prop name="lev.retailtechstop.URL"
+       location="region/lse/ActionConfig.xml"
+       xpath="/ActionSet/Action[@name='BROWSER:RETAIL_TECHSTOP']/Parameter[@name='url']/@value"
+       jarfile="lib/lev-config.jar"/> -->
+      <!-- XSS-99 - Retail Techstop Integration - End -->
+      
+  
+
+      <!-- XSS-246- AMA-XSTORE Load Item List - Inventory Management- Start -->   
+       <prop name="lev.itemUploadArch.folder" location="system.properties" property="lev.itemUploadArch.folder"/>
+       <prop name="lev.itemUploadMain.folder" location="system.properties" property="lev.itemUploadMain.folder"/>
+       <prop name="lev.itemUpload.sleepinterval" location="system.properties" property="lev.sleepinterval.folder"/>
+       <prop name="lev.itemUploadreject.folder" location="system.properties" property="lev.itemUploadreject.folder"/>
+       <prop name="lev.itemUploadFile.extnsn" location="system.properties" property="lev.itemUploadFile.extnsn"/>
+       <!-- XSS-246- AMA-XSTORE Load Item List - Inventory Management- End -->
+
+      <!-- XSS-270 Retail Techstop opens in external edge browser start -->
+      <prop name="lev.retailtechstop.URL"
+      location="region/lse/OpChainConfig.xml"
+      xpath="/OpChainSet/OpChain[@name='LAUNCH_RETAIL_TECHSTOP']/Op[@class='dtv.pos.framework.process.ExecOp']/Parameter[@name='arg'][2]/@value"
+      jarfile="lib/lev-config.jar"/>
+      <!-- XSS-270  end -->
+       
+      <!--Start GP-  JIRA 7XSTORE-7107 Thousand separator for number input, and remove the decimal--> 
+       <prop name="lev.currency.ui.CurrencyId" location="system.properties" property="lev.currency.ui.CurrencyId"/>
+      <!--End GP-  JIRA 7XSTORE-7107 Thousand separator for number input, and remove the decimal-->
+	
+	<!-- LSE Loyalty changes start -->
+	<prop name="lev.lseLoyalty.testservice.url" location="system.properties" property="lev.lseLoyalty.testservice.url"/>
+	<prop name="lev.lseLoyalty.testservice.timeout" location="system.properties" property="lev.lseLoyalty.testservice.timeout"/>
+	<prop name="lev.lseLoyalty.prodservice.url" location="system.properties" property="lev.lseLoyalty.prodservice.url"/>
+	<prop name="lev.lseLoyalty.prodservice.timeout" location="system.properties" property="lev.lseLoyalty.prodservice.timeout"/>
+	<prop name="LSE_LOYALTY_TARGET_akamai" location="system.properties" property="LSE_LOYALTY_TARGET_akamai"/>
+	<prop name="LSE_LOYALTY_TARGET" location="system.properties" property="LSE_LOYALTY_TARGET"/>
+	<prop name="lev.lseLoyalty.testservice.url"
+		location="bizfunc/lseloyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_LOYALTY_ENGINE_GET_BENEFITS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.lseLoyalty.prodservice.url"
+		location="bizfunc/lseloyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_LOYALTY_ENGINE_GET_BENEFITS_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+	<!-- LSE Loyalty changes End -->
+	
+	<!-- SR 3-30092915971 -->
+	<prop name="oracle.retail.xstore.taxfree.textMessageSize" location="system.properties" property="oracle.retail.xstore.taxfree.textMessageSize"/>
+	<!-- SR 3-30092915971 -->
+	      <!-- Xstore-7532 Gift Voucher Requirement for Qwikcilver starts -->
+      <prop name="lev.giftvoucher.redeem.prodservice.url" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_REDEEM_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.redeem.testservice.url" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_REDEEM_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.giftvoucher.redeem.prodservice.timeout" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_REDEEM_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.redeem.testservice.timeout" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_REDEEM_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.giftvoucher.void.prodservice.url" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_VOID_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.void.testservice.url" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_VOID_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.void.prodservice.timeout" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_VOID_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.void.testservice.timeout" location="country/in/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GIFT_VOUCHER_VOID_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+	
+	  <prop name="lev.giftvoucher.redeem.prodservice.user" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_REDEEM_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.giftvoucher.redeem.prodservice.password" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_REDEEM_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.redeem.testservice.user" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_REDEEM_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.giftvoucher.redeem.testservice.password" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_REDEEM_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.void.prodservice.user" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_VOID_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.giftvoucher.void.prodservice.password" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_VOID_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	   <prop name="lev.giftvoucher.void.testservice.user" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_VOID_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.giftvoucher.void.testservice.password" location="country/in/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GIFT_VOUCHER_VOID_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.giftvoucher.GiftVoucherCardPrefix" location="system.properties" property="lev.giftvoucher.GiftVoucherCardPrefix"/>
+	
+	<!-- Xstore-7532 Gift Voucher Requirement for Qwikcilver ends -->
+	
+	<prop name="dtv.location.primaryTerminalNumber" location="root/system.properties" property="dtv.location.primaryTerminalNumber"/>
+	
+	
+	<!--Xstore-7358 AMA-XSTORE-IN Customer Loyalty Program starts -->
+	
+	  <prop name="lev.loyaltybenefits.redeem.prodservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_REDEEM_BENEFIT_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.redeem.testservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_REDEEM_BENEFIT_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.loyaltybenefits.redeem.prodservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_REDEEM_BENEFIT_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.redeem.testservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_REDEEM_BENEFIT_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	   <prop name="lev.loyaltybenefits.validateotp.prodservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_VALIDATE_BENEFIT_OTP_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.validateotp.testservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_VALIDATE_BENEFIT_OTP_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.loyaltybenefits.validateotp.prodservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_VALIDATE_BENEFIT_OTP_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.validateotp.testservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_VALIDATE_BENEFIT_OTP_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.resendotp.prodservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_RESEND_BENEFIT_OTP_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.resendotp.testservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_RESEND_BENEFIT_OTP_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.loyaltybenefits.resendotp.prodservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_RESEND_BENEFIT_OTP_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.resendotp.testservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_RESEND_BENEFIT_OTP_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.getbenefits.prodservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_BENEFITS_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.getbenefits.testservice.url" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_BENEFITS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />	
+		
+	  <prop name="lev.loyaltybenefits.getbenefits.prodservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_BENEFITS_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.getbenefits.testservice.timeout" location="region/ama/loyalty/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='LEV_GET_BENEFITS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.redeem.prodservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_REDEEM_BENEFIT_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.redeem.prodservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_REDEEM_BENEFIT_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.validateotp.prodservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_VALIDATE_BENEFIT_OTP_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.validateotp.prodservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_VALIDATE_BENEFIT_OTP_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.resendotp.prodservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_RESEND_BENEFIT_OTP_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.resendotp.prodservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_RESEND_BENEFIT_OTP_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	 <prop name="lev.loyaltybenefits.getbenefits.prodservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_BENEFITS_PROD']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.getbenefits.prodservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_BENEFITS_PROD']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	 <prop name="lev.loyaltybenefits.redeem.testservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_REDEEM_BENEFIT_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.redeem.testservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_REDEEM_BENEFIT_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.validateotp.testservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_VALIDATE_BENEFIT_OTP_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.validateotp.testservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_VALIDATE_BENEFIT_OTP_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	  <prop name="lev.loyaltybenefits.resendotp.testservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_RESEND_BENEFIT_OTP_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.resendotp.testservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_RESEND_BENEFIT_OTP_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+		
+	 <prop name="lev.loyaltybenefits.getbenefits.testservice.user" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_BENEFITS_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	  <prop name="lev.loyaltybenefits.getbenefits.testservice.password" location="region/ama/loyalty/spring/lev-beans.xml"
+		xpath="/beans/bean[@id='LEV_GET_BENEFITS_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+	 
+
+	 <!--Xstore-7358 AMA-XSTORE-IN Customer Loyalty Program ends --> 
+	 <!--XSS-461 - Enablement of Option to Enable/Disable the TSE from the Stores :Starts--> 
+       <prop name="lev.restart.batchfile" location="system.properties" property="lev.restart.batchfile"/>
+       <prop name="lev.xstore.sysprop" location="system.properties" property="lev.xstore.sysprop"/>
+      <!--XSS-461 - Enablement of Option to Enable/Disable the TSE from the Stores : Ends-->    
+
+
+	 <!--Xstore-7358 AMA-XSTORE-IN Customer Loyalty Program ends -->     
+
+      
+         
+	<!-- Loyalty Integration  -->
+		<!-- Test cred -->
+		<prop name="lev.loyalty.service.test.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='MEMBER_ENQUIRY_WS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='MEMBER_ENQUIRY_WS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.memberEnquiry.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.test.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+		
+
+   <prop name="lev.loyalty.service.test.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='POINT_REDEMPTION_WS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='POINT_REDEMPTION_WS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.pointsRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.test.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+		    
+    
+    <prop name="lev.loyalty.service.test.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOID_REDEMPTION_WS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOID_REDEMPTION_WS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.voidRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.test.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+	
+    <prop name="lev.loyalty.service.test.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='CARD_ENQUIRY_WS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='CARD_ENQUIRY_WS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.cardEnquiry.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.test.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+	
+	<prop name="lev.loyalty.service.test.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOUCHER_REDEMPTION_WS_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOUCHER_REDEMPTION_WS_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />		
+
+	<prop name="lev.loyalty.voucherRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION_TEST']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION_TEST']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.test.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION_TEST']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+		
+		<!-- Test cred --> 
+	<prop name="lev.loyalty.service.prod.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='MEMBER_ENQUIRY_WS']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='MEMBER_ENQUIRY_WS']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.memberEnquiry.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.prod.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='MEMBER_ENQUIRY']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+		
+
+   <prop name="lev.loyalty.service.prod.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='POINT_REDEMPTION_WS']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='POINT_REDEMPTION_WS']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.pointsRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.prod.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='POINT_REDEMPTION']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+		    
+    
+    <prop name="lev.loyalty.service.prod.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOID_REDEMPTION_WS']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOID_REDEMPTION_WS']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+		
+
+	<prop name="lev.loyalty.voidRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.prod.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOID_REDEMPTION']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	
+    
+    <prop name="lev.loyalty.discountCode" location="system.properties" property="lev.loyalty.discountCode"/>  
+	<prop name="lev.loyalty.countryCode" location="system.properties" property="lev.loyalty.countryCode"/>
+	<prop name="lev.loyalty.enquiryCode" location="system.properties" property="lev.loyalty.enquiryCode"/>	  
+    <prop name="lev.loyalty.envType" location="system.properties" property="lev.loyalty.envType"/>
+        
+    <prop name="lev.loyalty.service.prod.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='CARD_ENQUIRY_WS']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='CARD_ENQUIRY_WS']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />	
+
+
+	<prop name="lev.loyalty.cardEnquiry.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+
+	<prop name="lev.loyalty.service.prod.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='CARD_ENQUIRY']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />	  
+	
+    <prop name="lev.loyalty.service.prod.url" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOUCHER_REDEMPTION_WS']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+		
+	<prop name="lev.loyalty.service.timeout" location="bizfunc/amaascentis/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='VOUCHER_REDEMPTION_WS']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />		
+
+	<prop name="lev.loyalty.voucherRedemption.service.path" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION']/property[@name='servicePath']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.user" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION']/property[@name='username']/@value"
+		jarfile="lib/lev-config.jar" />
+
+	<prop name="lev.loyalty.service.prod.password" location="bizfunc/amaascentis/spring/lev-loyalty.xml"
+		xpath="/beans/bean[@id='VOUCHER_REDEMPTION']/property[@name='password']/@value"
+		jarfile="lib/lev-config.jar" />
+    <!-- Loyalty Integration  -->
+
+
+      <!-- XSTORE-7607 Start -->
+      <prop name="lev.pk.fbr.prodservice.url" location="country/pk/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='FBR_INVOICE_NUMBER_PROD']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+	  <prop name="lev.pk.fbr.prodservice.timeout" location="country/pk/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='FBR_INVOICE_NUMBER_PROD']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+
+      <prop name="lev.pk.fbr.testservice.url" location="country/pk/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='FBR_INVOICE_NUMBER_TEST']/Parameters/TargetUri"
+		jarfile="lib/lev-config.jar" />
+	  <prop name="lev.pk.fbr.testservice.timeout" location="country/pk/ServiceHandlers.xml"
+		xpath="/Services/Service[@name='FBR_INVOICE_NUMBER_TEST']/Parameters/ConnectTimeout"
+		jarfile="lib/lev-config.jar" />
+		
+      <prop name="lev.pk.fbr.bearertoken" location="system.properties" property="lev.pk.fbr.bearertoken"/>
+	  
+	  <prop name="Dhttps.protocols" location="system.properties" property="Dhttps.protocols"/>
+      <!-- XSTORE-7607 End -->
+  
+  <!-- XSS-497 : Changes Start--> 
+   <prop name="lev.enable.double.receiving.validation" location="region/ama/SysConfig.xml"
+    	xpath="/SysConfig/Setting[@name='Lev---Enable---Double---Receiving']"
+    	jarfile="lib/lev-config.jar" />
+  <!-- XSS-497 : Changes End-->
+  
+    <!-- XSS-246 - Code checkin under XSV21-189- Start -->
+	<prop name="lev.itemUploadArch.folder" location="system.properties" property="lev.itemUploadArch.folder" />
+	<prop name="lev.itemUploadMain.folder" location="system.properties" property="lev.itemUploadMain.folder" />
+	<prop name="lev.itemUpload.sleepinterval" location="system.properties" property="lev.sleepinterval.folder" />
+	<prop name="lev.itemUploadreject.folder" location="system.properties" property="lev.itemUploadreject.folder" />
+	<prop name="lev.itemUploadFile.extnsn" location="system.properties" property="lev.itemUploadFile.extnsn" />
+	<!-- XSS-246 - Code checkin under XSV21-189- End -->
+	<!--XSTORE-XSTORE-9603  Making harwdware values configurable-->
+<prop name="hardware.HU.FISCAL.Printer"
+			  location="country/hu/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='FISCAL']/name"
+			  jarfile="lib/lev-config.jar" />
+<prop name="hardware.HU.FISCAL.Port"
+			  location="country/hu/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='FISCAL']/portName"
+			  jarfile="lib/lev-config.jar" />
+<prop name="hardware.HU.CashDrawer"
+			  location="country/hu/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='CashDrawer']/name"
+			  jarfile="lib/lev-config.jar" />
+<prop name="hardware.HU.customerdisplay"
+			  location="country/hu/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='CustomerDisplay'][@use='CUST_DISPLAY1']/name"
+			  jarfile="lib/lev-config.jar" />
+<prop name="hardware.HU.customerdisplay1"
+			  location="country/hu/HardwareConfig.xml"
+			  xpath="/Hardware/Device[@type='CustomerDisplay'][@use='CUST_DISPLAY']/name"
+			  jarfile="lib/lev-config.jar" />
+<!--XSTORE-XSTORE-9603  Making harwdware values configurable-->
+      
+</propmap>

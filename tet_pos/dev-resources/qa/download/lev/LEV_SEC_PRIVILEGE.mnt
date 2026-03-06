@@ -1,0 +1,3 @@
+<Header target_org_node="*:*" deployment_name="SEC_PRIVILEGE" download_time="IMMEDIATE" apply_immediately="true" />
+# Who is allowed to perform a No Sale?  (open cash drawer) - Manager, Supervisor
+INSERT|SEC_PRIVILEGE|NO_SALE|0||DAA=|NO_PROMPT|0|DAA=|_secPrivilege_NO_SALE|0|*

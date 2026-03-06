@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: custom-post.xml 444 2014-04-25 01:26:03Z dtvdomain\ikhan $ -->
+<!-- $URL: https://dtvsource/remote-svn/cst_template/branches/7.0.1/pos/installx/pos/custom-post.xml $ -->
+<project name="custom post-install tasks" default="run-tasks" basedir=".">
+
+	<property name="custom-post-cust-id" value="LEV" />
+	<property file="${install.dir}/system.properties" prefix="xst" />
+	<property file="${install.dir}/xstore.properties" prefix="xstp" />
+	<property name="include.system" value="#!include system.properties" />
+	<property name="include.xstoreMobile" value="#!include xstore_mobile.properties" />
+	
+	<!-- ========================================================= -->
+
+	
+	<target name="run-tasks" description="Run custom post targets for mini build" unless="${lev.mini.build.rollback}">
+			<antcall target="lev-copy-country-specific-xstore-properties" />
+			<antcall target="lev-update-properties-from-xstore-backup" />
+	     	<antcall target="lev-update-xstore-property" />
+			<antcall target="lev-update-xstore-mobile-property" />				
+	</target>
+	
+	
+<!-- RETLDEV-20 Add configuration to take property values from backup at the time on update/upgrade :: Start -->	
+		<target name="lev-check-and-load-deployment-properties">
+			<for list="lev.copy.properties.value.from.backup,lev.list.properties.copy.from.backup" param="deploymentprop">
+				<sequential>					
+					<if>
+						<and>
+						  <available file="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" />
+						  <containsproperty propertyfile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" propertyname="@{deploymentprop}" />
+						</and>
+						<then>
+						  <loadproperties prefix="COUNTRY_DEPLOYMENT" srcFile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties">
+							<filterchain>
+							  <linecontains>
+								<contains value="@{deploymentprop}" />
+							  </linecontains>
+							</filterchain>
+						  </loadproperties>
+						  <property name="final.@{deploymentprop}" value="${COUNTRY_DEPLOYMENT.@{deploymentprop}}"/>
+						</then>
+						<else>
+						  <loadproperties prefix="GLOBAL_DEPLOYMENT" srcFile="${basedir}/custom/lev-deployment.properties">
+							<filterchain>
+							  <linecontains>
+								<contains value="@{deploymentprop}" />
+							  </linecontains>
+							</filterchain>
+						  </loadproperties>    
+						  <property name="final.@{deploymentprop}" value="${GLOBAL_DEPLOYMENT.@{deploymentprop}}"/>							  
+						</else>
+					</if>
+				</sequential>
+			</for>
+		</target>
+	
+		<target name="lev-update-properties-from-xstore-backup" if="${final.lev.copy.properties.value.from.backup}" depends="lev-check-and-load-deployment-properties">      
+			<trycatch property="missing-backup-prop-file" reference="error-ref">
+			  <try>
+				<property url="jar:file:${root.dir}/BACKUPxstore/xstore-pos-backup.zip!/xstore.properties"/>
+			  </try>
+			  <catch>
+				<echo message="WARNING:File xstore.properties is not found in the the xstore backup folder."/>
+			  </catch> 
+			</trycatch>
+	
+			<if>
+			    <not>
+				    <isset property="missing-backup-prop-file" />
+				</not>
+				<then>
+					<property url="jar:file:${root.dir}/BACKUPxstore/xstore-pos-backup.zip!/xstore.properties" prefix="XSTORE_PROP_FRM_BKUP"/>
+					<for list="${final.lev.list.properties.copy.from.backup}" param="prop">
+						<sequential>
+							<if>
+							    <or>
+									<length string="${XSTORE_PROP_FRM_BKUP.@{prop}}" trim="true" when="less" length="1" />
+									<contains string="${XSTORE_PROP_FRM_BKUP.@{prop}}" substring="XSTORE_PROP_FRM_BKUP" />
+								</or>
+								<then>							
+									<echo message="WARNING: Property @{prop} or its value is not present in the ${root.dir}BACKUPxstore\xstore-pos-backup.zip!\xstore file hence keeping key value pair which is part of this update build" />
+								</then>
+								<else>
+									<propertyfile file="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties">
+										<entry key="@{prop}" value="${XSTORE_PROP_FRM_BKUP.@{prop}}" />
+									</propertyfile>
+									<echo message="Updated property @{prop} from xstore backup to xstore updates xstore.properties" />
+									<echo message=" " />
+								</else>
+							</if>
+						</sequential>
+					</for>
+				</then>
+			</if>
+		</target>
+<!-- RETLDEV-20 Add configuration to take property values from backup at the time on update/upgrade :: End -->
+		
+		<target name="lev-check-country-specific-property">
+			<condition property="isCountryPropertyPresent">
+				<available file="${basedir}/lev-custom/updates/xstore_${xstp.dtv.location.CountryId}.properties" />
+			</condition>    	
+		</target>
+
+		<target name="lev-update-xstore-property" if="isCountryPropertyPresent" >
+			<echo message="Updating data from country COUNTRY_${xstp.dtv.location.CountryId} to xstore.prop file ." />
+	    	<updatexstoreproperties mergefile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" origfile="${install.dir}/xstore.properties" overwrite="true" />   
+		</target>
+		
+		<target name="lev-update-xstore-mobile-property" if="isCountryPropertyPresent" >
+			<echo message="Updating data from country COUNTRY_${xstp.dtv.location.CountryId} to xstore_mobile.prop file ." />    
+			<updatexmobileproperties mergefile="${install.dir}/updates/xstore_${xstp.dtv.location.CountryId}.properties" origfile="${xstore.mobile.install}/xstore_mobile.properties" overwrite="true" />		
+		</target>
+	
+		<target name="lev-copy-country-specific-xstore-properties" depends="lev-check-country-specific-property" if="isCountryPropertyPresent" >
+			    <echo message="copy country specific file in update folder." />
+				<copy todir="${install.dir}/updates" file="${basedir}/lev-custom/updates/xstore_${xstp.dtv.location.CountryId}.properties" overwrite="true" verbose="true" />
+		</target>
+	
+	 <!-- updates a properties file using a new properties file -->
+		<macrodef name="updatexstoreproperties">
+		      <attribute name="origfile" />
+		      <attribute name="mergefile" />
+		      <attribute name="overwrite" default="true" />
+		      <sequential>
+		        <if>
+		          <and>
+		            <available file="@{mergefile}" />
+		            <available file="@{origfile}" />
+		          </and>
+		          <then>
+		            <echo message="** Found @{mergefile}, merging file" />
+		            <mergePropertyFiles origfile="@{origfile}" mergefile="@{mergefile}" output="${install.dir}/xstore_update.properties" overwrite="@{overwrite}" />
+		            
+		            <echo message="** Replacing @{origfile} with updated version" />
+		            <copy file="${install.dir}/xstore_update.properties" tofile="${install.dir}/xstore.properties" overwrite="true" verbose="true" />
+		            <delete file="${install.dir}/xstore_update.properties" verbose="true" />
+		          </then>
+		          <else>
+		            <echo level="warning" message="*** Config file @{mergefile} or original file @{origfile} does not exist.  No merge was attempted. ***" />
+		          </else>
+		        </if>
+		      </sequential>
+		</macrodef>	
+			
+		<macrodef name="updatexmobileproperties">
+		      <attribute name="origfile" />
+		      <attribute name="mergefile" />
+		      <attribute name="overwrite" default="true" />
+		      <sequential>
+		        <if>
+		          <and>
+		            <available file="@{mergefile}" />
+		            <available file="@{origfile}" />
+		          </and>
+		          <then>
+		            <echo message="** Found @{mergefile}, rmerging file." />
+		            <mergePropertyFiles origfile="@{origfile}" mergefile="@{mergefile}" output="${xstore.mobile.install}/xstore_update.properties" overwrite="@{overwrite}" />
+		            
+		            <echo message="** Replacing @{origfile} with updated version" />
+		            <copy file="${xstore.mobile.install}/xstore_update.properties" tofile="${xstore.mobile.install}/xstore_mobile.properties" overwrite="true" verbose="true" />
+		            <delete file="${xstore.mobile.install}/xstore_update.properties" verbose="true" />
+		          </then>
+		          <else>
+		            <echo level="warning" message="*** Config file @{mergefile} or original file @{origfile} does not exist.  No merge was attempted. ***" />
+		          </else>
+		        </if>
+		      </sequential>
+		</macrodef>		
+
+</project>

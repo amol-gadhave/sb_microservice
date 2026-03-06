@@ -1,0 +1,916 @@
+NZ|AUK|Auckland
+NZ|BOP|Bay of Plenty
+NZ|CAN|Canterbury
+NZ|GIS|Gisborne
+NZ|HKB|Hawke's Bay
+NZ|MBH|Marlborough
+NZ|MWT|Manawatu-Wanganui
+NZ|NSN|Nelson
+NZ|NTL|Northland
+NZ|OTA|Otago
+NZ|STL|Southland
+NZ|TAS|Tasman
+NZ|TKI|Taranaki
+NZ|WKO|Waikato
+NZ|WGN|Wellington
+NZ|WTC|West Coast
+NZ|CIT|Chatham Islands Territory
+AU|NSW|Sydney
+AU|QLD|Brisbane
+AU|SA|Adelaide
+AU|TAS|Hobart
+AU|VIC|Melbourne
+AU|WA|Perth
+CA|AB|Alberta
+US|AK|Alaska
+US|AL|Alabama
+US|AR|Arkansas
+US|AZ|Arizona
+CA|BC|British Columbia
+US|CA|California
+US|CO|Colorado
+US|CT|Connecticut
+US|DC|District of Columbia
+US|DE|Delaware
+US|FL|Florida
+US|GA|Georgia
+US|GU|Guam
+US|HI|Hawaii
+US|IA|Iowa
+US|ID|Idaho
+US|IL|Illinois
+US|IN|Indiana
+US|KS|Kansas
+US|KY|Kentucky
+US|LA|Louisiana
+US|MA|Massachusetts
+CA|MB|Manitoba
+US|MD|Maryland
+US|ME|Maine
+US|MI|Michigan
+US|MN|Minnesota
+US|MO|Missouri
+US|MS|Mississippi
+US|MT|Montana
+CA|NB|New Brunswick
+US|NC|North Carolina
+US|ND|North Dakota
+US|NE|Nebraska
+US|NH|New Hampshire
+US|NJ|New Jersey
+CA|NL|Newfoundland and Labrador
+US|NM|New Mexico
+CA|NS|Nova Scotia
+CA|NT|Northwest Territories
+CA|NU|Nunavut
+US|NV|Nevada
+US|NY|New York
+US|OH|Ohio
+US|OK|Oklahoma
+CA|ON|Ontario
+US|OR|Oregon
+US|PA|Pennsylvania
+CA|PE|Prince Edward Island
+US|PR|Puerto Rico
+CA|QC|Quebec
+US|RI|Rhode Island
+US|SC|South Carolina
+US|SD|South Dakota
+CA|SK|Saskatchewan
+US|TN|Tennessee
+US|TX|Texas
+US|UT|Utah
+US|VA|Virginia
+US|VI|Virgin Islands (U.S.)
+US|VT|Vermont
+US|WA|Washington
+US|WI|Wisconsin
+US|WV|West Virginia
+US|WY|Wyoming
+CA|YT|Yukon Territory
+MX|AGU|Aguascalientes
+MX|BCN|Baja California
+MX|BCS|Baja California Sur
+MX|CAM|Campeche
+MX|CHP|Chiapas
+MX|CHH|Chihuahua
+MX|COA|Coahuila de Zaragoza
+MX|COL|Colima
+MX|DIF|Distrito Federal
+MX|DUR|Durango
+MX|GUA|Guanajuato
+MX|GRO|Guerrero
+MX|HID|Hidalgo
+MX|JAL|Jalisco
+MX|MEX|México
+MX|MIC|Michoacán de Ocampo
+MX|MOR|Morelos
+MX|NAY|Nayarit
+MX|NLE|Nuevo León
+MX|OAX|Oaxaca
+MX|PUE|Puebla
+MX|QUE|Querétaro
+MX|ROO|Quintana Roo
+MX|SLP|San Luis Potosí
+MX|SIN|Sinaloa
+MX|SON|Sonora
+MX|TAB|Tabasco
+MX|TAM|Tamaulipas
+MX|TLA|Tlaxcala
+MX|VER|Veracruz
+MX|YUC|Yucatán
+MX|ZAC|Zacatecas
+MX|MTY|Monterrey
+IT|AG|Agrigento
+IT|AL|Alessandria
+IT|AN|Ancona
+IT|AO|Aosta
+IT|AR|Arezzo
+IT|AP|Ascoli Piceno
+IT|AQ|L'Aquila
+IT|AT|Asti
+IT|AV|Avellino
+IT|BA|Bari
+IT|BG|Bergamo
+IT|BI|Biella
+IT|BL|Belluno
+IT|BN|Benevento
+IT|BO|Bologna
+IT|BR|Brindisi
+IT|BS|Brescia
+IT|BT|Barletta-Andria-Trani
+IT|BZ|Bolzano
+IT|CA|Cagliari
+IT|CB|Campobasso
+IT|CE|Caserta
+IT|CH|Chieti
+IT|CI|Carbonia-Iglesias
+IT|CL|Caltanisetta
+IT|CN|Cuneo
+IT|CO|Como
+IT|CR|Cremona
+IT|CS|Cosenza
+IT|CT|Catania
+IT|CZ|Catanzaro
+IT|EN|Enna
+IT|FC|Forl\u00EC-Cesena
+IT|FE|Ferrara
+IT|FG|Foggia
+IT|FI|Firenze
+IT|FM|Fermo
+IT|FR|Frosinone
+IT|GE|Genova
+IT|GO|Gorizia
+IT|GR|Grosseto
+IT|IM|Imperia
+IT|IS|Isernia
+IT|KR|Crotone
+IT|LC|Lecco
+IT|LE|Lecce
+IT|LI|Livorno
+IT|LO|Lodi
+IT|LT|Latina
+IT|LU|Lucca
+IT|MB|Monza e Brianza
+IT|MC|Macerata
+IT|ME|Messina
+IT|MI|Milano
+IT|MN|Mantova
+IT|MO|Modena
+IT|MS|Massa-Carrara
+IT|MT|Matera
+IT|NA|Napoli
+IT|NO|Novara
+IT|NU|Nuoro
+IT|OG|Ogliastra
+IT|OR|Oristano
+IT|OT|Olbia-Tempio
+IT|PA|Palermo
+IT|PC|Piacenza
+IT|PD|Padova
+IT|PE|Pescara
+IT|PG|Perugia
+IT|PI|Pisa
+IT|PN|Pordenone
+IT|PO|Prato
+IT|PR|Parma
+IT|PS|Pesaro
+IT|PT|Pistoia
+IT|PU|Pesaro e Urbino
+IT|PV|Pavia
+IT|PZ|Potenza
+IT|RA|Ravenna
+IT|RC|Reggio Calabria
+IT|RE|Reggio Emilia
+IT|RG|Ragusa
+IT|RI|Rieti
+IT|RM|Roma
+IT|RN|Rimini
+IT|RO|Rovigo
+IT|SA|Salerno
+IT|SI|Siena
+IT|SO|Sondrio
+IT|SP|La Spezia
+IT|SR|Siracusa
+IT|SS|Sassari
+IT|SV|Savona
+IT|TA|Taranto
+IT|TE|Teramo
+IT|TN|Trento
+IT|TO|Torino
+IT|TP|Trapani
+IT|TR|Terni
+IT|TS|Trieste
+IT|TV|Treviso
+IT|UD|Udine
+IT|VA|Varese
+IT|VB|Verbania
+IT|VC|Vercelli
+IT|VE|Venezia
+IT|VI|Vicenza
+IT|VR|Verona
+IT|VS|Medio Campidano
+IT|VT|Viterbo
+IT|VV|Vibo Valentia
+DE|BB|Brandenburg
+DE|BE|Berlin
+DE|BW|Baden-W\u00FCrttemberg
+DE|BY|Bavaria
+DE|HB|Bremen
+DE|HE|Hessen
+DE|HH|Hamburg
+DE|NI|Niedersachsen
+DE|MV|Mecklenburg-Vorpommern
+DE|NW|Nordrhein-Westfalen
+DE|RP|Rheinland-Pfalz
+DE|SH|Schleswig-Holstein
+DE|SL|Saarland
+DE|SN|Sachsen
+DE|ST|Sachsen-Anhalt
+DE|TH|Th\u00FCringen
+ES|C|A Coru\u00F1a
+ES|VI|\u00C1lava
+ES|AB|Albacete
+ES|A|Alicante
+ES|AL|Almer\u00EDa
+ES|O|Asturias
+ES|AV|\u00C1vila
+ES|BA|Badajoz
+ES|PM|Balears
+ES|B|Barcelona
+ES|BU|Burgos
+ES|CC|C\u00E1ceres
+ES|CA|C\u00E1diz
+ES|S|Cantabria
+ES|CS|Castell\u00F3n
+ES|CR|Ciudad Real
+ES|CO|C\u00F3rdoba
+ES|CU|Cuenca
+ES|GI|Girona
+ES|GR|Granada
+ES|GU|Guadalajara
+ES|SS|Guip\u00FAzcoa
+ES|H|Huelva
+ES|HU|Huesca
+ES|J|Ja\u00E9n
+ES|LO|La Rioja
+ES|GC|Las Palmas
+ES|LE|Le\u00F3n
+ES|L|Lleida
+ES|LU|Lugo
+ES|M|Madrid
+ES|MA|M\u00E1laga
+ES|MU|Murcia
+ES|NA|Navarra
+ES|OR|Ourense
+ES|P|Palencia
+ES|PO|Pontevedra
+ES|SA|Salamanca
+ES|TF|Santa Cruz de Tenerife
+ES|SG|Segovia
+ES|SE|Sevilla
+ES|SO|Soria
+ES|T|Tarragona
+ES|TE|Teruel
+ES|TO|Toledo
+ES|V|Valencia
+ES|VA|Valladolid
+ES|BI|Vizcaya
+ES|ZA|Zamora
+ES|Z|Zaragoza
+GB|AM|Armagh
+GB|AN|Angus
+GB|AR|Argyll
+GB|AS|Aberdeenshire
+GB|AT|Antrim
+GB|AV|Avon
+GB|AY|Ayrshire
+GB|BE|Bedfordshire
+GB|BK|Berkshire
+GB|BO|Borders
+GB|BU|Buckinghamshire
+GB|CA|Cambridgeshire
+GB|CD|County Durham
+GB|CE|Central
+GB|CH|Cheshire
+GB|CI|Channel Islands
+GB|CL|Clwyd
+GB|CN|Caithness
+GB|CO|Cornwall
+GB|CS|Clackmannanshire
+GB|CU|Cumbria
+GB|CV|Cleveland
+GB|DB|Derbyshire
+GB|DN|Down
+GB|DO|Dorset
+GB|DS|Dumfriesshire
+GB|DT|Dunbartonshire
+GB|DU|Durham
+GB|DV|Devon
+GB|DY|Dyfed
+GB|EA|East Sussex
+GB|EI|Eire
+GB|EL|East Lothian
+GB|ES|Essex
+GB|FI|Fife
+GB|FM|Fermanagh
+GB|FS|Falkirkshire
+GB|GL|Gloucestershire
+GB|GM|Greater Manchester
+GB|GR|Grampian
+GB|GS|Glamorganshire
+GB|GW|Gwent
+GB|GY|Gwynedd
+GB|HA|Hampshire
+GB|HI|Highland
+GB|HS|Herefordshire
+GB|HT|Hertfordshire
+GB|HU|Humberside
+GB|HW|Herefd. and Worcest.
+GB|IM|Isle of Man
+GB|IS|Inverness-Shire
+GB|IW|Isle of Wight
+GB|KE|Kent
+GB|LA|Lancashire
+GB|LD|Londonderry
+GB|LE|Leicestershire
+GB|LI|Lincolnshire
+GB|LO|Greater London
+GB|LS|Lanarkshire
+GB|LT|Lothian
+GB|MG|Mid Glamorgan
+GB|MO|Morayshire
+GB|MS|Middlesex
+GB|MT|Midlothian
+GB|MY|Merseyside
+GB|NE|Neath
+GB|NH|Northamptonshire
+GB|NI|Norther Ireland
+GB|NK|Norfolk
+GB|NT|Nottinghamshire
+GB|NU|Northumberland
+GB|OX|Oxfordshire
+GB|PO|Powys
+GB|PS|Perthshire
+GB|RO|Ross-Shire
+GB|RS|Renfrewshire
+GB|RX|Roxburghshire
+GB|SC|Strathclyde
+GB|SD|South Humberside
+GB|SG|South Glamorgan
+GB|SH|Shropshire
+GB|SI|Shetland Isles
+GB|SL|Stirlingshire
+GB|SO|Somerset
+GB|SS|Selkirkshire
+GB|ST|Staffordshire
+GB|SU|Suffolk
+GB|SX|Sussex
+GB|SY|Surrey
+GB|TA|Tayside
+GB|TW|Tyne and Wear
+GB|TY|Tyrone
+GB|WA|Warwickshire
+GB|WG|West Glamorgan
+GB|WI|Wiltshire
+GB|WL|West Lothian
+GB|WM|West Midlands
+GB|WO|Worcestershire
+GB|WS|West Sussex
+GB|YE|East Yorkshire
+GB|YK|Yorkshire
+GB|YN|North Yorkshire
+GB|YS|South Yorkshire
+GB|YW|West Yorkshire
+NL|DR|Drenthe
+NL|FL|Flevoland
+NL|FR|Friesland
+NL|GE|Gelderland
+NL|GR|Groningen
+NL|LI|Limburg
+NL|NB|Noord-Brabant
+NL|NH|Noord-Holland
+NL|OV|Overijssel
+NL|UT|Utrecht
+NL|ZE|Zeeland
+NL|ZH|Zuid-Holland
+FR|01|Ain
+FR|02|Aisne
+FR|03|Allier
+FR|04|Alpes (Hte-Provence)
+FR|05|Alpes (Hautes)
+FR|06|Alpes-Maritimes
+FR|07|Ardeche
+FR|08|Ardennes
+FR|09|Ariege
+FR|10|Aube
+FR|11|Aude
+FR|12|Aveyron
+FR|13|Bouches-du-Rh\u00F4ne
+FR|14|Calvados
+FR|15|Cantal
+FR|16|Charente
+FR|17|Charente-Maritime
+FR|18|Cher
+FR|19|Correze
+FR|20|Corsica
+FR|21|Cote-d'Or
+FR|22|Cotes-d'Armor
+FR|23|Creuse
+FR|24|Dordogne
+FR|25|Doubs
+FR|26|Drome
+FR|27|Eure
+FR|28|Eure-et-Loir
+FR|29|Finistere
+FR|2A|Corse-du-Sud
+FR|2B|Corse-du-Nord
+FR|30|Gard
+FR|31|Garonne (Haute)
+FR|32|Gers
+FR|33|Gironde
+FR|34|Herault
+FR|35|Ille-et-Vilaine
+FR|36|Indre
+FR|37|Indre-et-Loire
+FR|38|Isere
+FR|39|Jura
+FR|40|Landes
+FR|41|Loir-et-Cher
+FR|42|Loire
+FR|43|Loire (Haute)
+FR|44|Loire-Atlantique
+FR|45|Loiret
+FR|46|Lot
+FR|47|Lot-et-Garonne
+FR|48|Lozere
+FR|49|Maine-et-Loire
+FR|50|Manche
+FR|51|Marne
+FR|52|Marne (Haute)
+FR|53|Mayenne
+FR|54|Meurthe-et-Moselle
+FR|55|Meuse
+FR|56|Morbihan
+FR|57|Moselle
+FR|58|Nievre
+FR|59|Nord
+FR|60|Oise
+FR|61|Orne
+FR|62|Pas-de-Calais
+FR|63|Puy-de-Dome
+FR|64|Pyrenees-Atlantiqu
+FR|65|Pyrenees (Hautes)
+FR|66|Pyrenees-Orientale
+FR|67|Bas-Rhin
+FR|68|Haut-Rhin
+FR|69|Rhone
+FR|70|Saone (Haute)
+FR|71|Saone-et-Loire
+FR|72|Sarthe
+FR|73|Savoie
+FR|74|Savoie (Haute)
+FR|75|Paris
+FR|76|Seine-Maritime
+FR|77|Seine-et-Marne
+FR|78|Yvelines
+FR|79|Sevres (Deux)
+FR|80|Somme
+FR|81|Tarn
+FR|82|Tarn-et-Garonne
+FR|83|Var
+FR|84|Vaucluse
+FR|85|Vendee
+FR|86|Vienne
+FR|87|Vienne (Haute)
+FR|88|Vosges
+FR|89|Yonne
+FR|90|Territ.-de-Belfort
+FR|91|Essonne
+FR|92|Hauts-de-Seine
+FR|93|Seine-Saint-Denis
+FR|94|Val-de-Marne
+FR|95|Val-d'Oise
+FR|97|D.O.M.-T.O.M.
+PT|01|Aveiro
+PT|02|Beja
+PT|03|Braga
+PT|04|Bragan\u00E7a
+PT|05|Castelo Branco
+PT|06|Coimbra
+PT|07|\u00C9vora
+PT|08|Faro
+PT|09|Guarda
+PT|10|Leiria
+PT|11|Lisbona
+PT|12|Portalegre
+PT|13|Porto
+PT|14|Santar\u00E9m
+PT|15|Set\u00FAbal
+PT|16|Viana do Castelo
+PT|17|Vila Real
+PT|18|Viseu
+PT|20|Azzorre
+PT|30|Madera
+BR|AC|Acre
+BR|AL|Alagoas
+BR|AM|Amazonas
+BR|AP|Amap\u00E1
+BR|BA|Bahia
+BR|CE|Cear\u00E1
+BR|DF|Distrito Federal
+BR|ES|Esp\u00EDrito Santo
+BR|GO|Goi\u00E1s
+BR|MA|Maranh\u00E3o
+BR|MG|Minas Gerais
+BR|MS|Mato Grosso do Sul
+BR|MT|Mato Grosso
+BR|PA|Par\u00E1
+BR|PB|Para\u00EDba
+BR|PE|Pernambuco
+BR|PI|Piau\u00ED
+BR|PR|Paran\u00E1
+BR|RJ|Rio de Janeiro
+BR|RN|Rio Grande do Norte
+BR|RO|Rond\u00F4nia
+BR|RR|Roraima
+BR|RS|Rio Grande do Sul
+BR|SC|Santa Catarina
+BR|SE|Sergipe
+BR|SP|S\u00E3o Paulo
+BR|TO|Tocantins
+SE|AB|Stockholm
+SE|AC|V\u00E4sterbotten
+SE|BD|Norrbotten
+SE|C|Uppsala
+SE|D|S\u00F6dermanland
+SE|E|\u00D6sterg\u00F6tland
+SE|F|J\u00F6nk\u00F6ping
+SE|G|Kronoberg
+SE|H|Kalmar
+SE|I|Gotland
+SE|K|Blekinge
+SE|M|Sk\u00E5ne
+SE|N|Halland
+SE|O|V\u00E4stra G\u00F6taland
+SE|S|V\u00E4rmland
+SE|T|\u00D6rebro
+SE|U|V\u00E4stmanland
+SE|W|Dalarna
+SE|X|G\u00E4vleborg
+SE|Y|V\u00E4sternorrland
+SE|Z|J\u00E4mtland
+AT|B|Burgenland
+AT|K|Carinthia
+AT|NOE|Lower Austria
+AT|OOE|Upper Austria
+AT|S|Salzburg
+AT|ST|Styria
+AT|T|Tyrol
+AT|V|Vorarlberg
+AT|W|Vienna
+PL|DS|Dolno\u015Bl\u0105skie
+PL|KP|Kujawsko-pomorskie
+PL|LU|Lubelskie
+PL|LB|Lubuskie
+PL|LD|\u0141\u00F3dzkie
+PL|MA|Ma\u0142opolskie
+PL|MZ|Mazowieckie
+PL|OP|Opolskie
+PL|PK|Podkarpackie
+PL|PD|Podlaskie
+PL|PM|Pomorskie
+PL|SL|\u015Al\u0105skie
+PL|SK|\u015Awi\u0119tokrzyskie
+PL|WN|Warmi\u0144sko-mazurskie
+PL|WP|Wielkopolskie
+PL|ZP|Zachodniopomorskie
+CN|ANH|Anhui
+CN|BEI|Beijing
+CN|CHO|Chongqing
+CN|FUJ|Fujian
+CN|GAN|Gansu
+CN|GDG|Guangdong
+CN|GXI|Guangxi
+CN|GUI|Guizhou
+CN|HAI|Hainan
+CN|HEB|Hebei
+CN|HEI|Heilongjiang
+CN|HEN|Henan
+CN|HUB|Hubei
+CN|HUN|Hunan
+CN|JSU|Jiangsu
+CN|JXI|Jiangxi
+CN|JIL|Jilin
+CN|LIA|Liaoning
+CN|MON|Inner Mongolia
+CN|NIN|Ningxia
+CN|QIN|Qinghai
+CN|SHA|Shaanxi
+CN|SHD|Shandong
+CN|SHH|Shanghai
+CN|SHX|Shanxi
+CN|SIC|Sichuan
+CN|TIA|Tianjin
+CN|XIN|Xinjiang
+CN|XIZ|Xizang
+CN|YUN|Yunnan
+CN|ZHE|Zhejiang
+IN|AN|Andaman and Nicobar Islands
+IN|AP|Andhra Pradesh
+IN|AR|Arunachal Pradesh
+IN|AS|Assam
+IN|BR|Bihar
+IN|CH|Chandigarh
+IN|CT|Chhattisgarh
+IN|DN|Dadra and Nagar Haveli
+IN|DD|Daman and Diu
+IN|DL|Delhi
+IN|GA|Goa
+IN|GJ|Gujarat
+IN|HR|Haryana
+IN|HP|Himachal Pradesh
+IN|JK|Jammu and Kashmir
+IN|JH|Jharkhand
+IN|KA|Karnataka
+IN|KL|Kerala
+IN|LA|Ladakh
+IN|LD|Lakshadweep
+IN|MP|Madhya Pradesh
+IN|MH|Maharashtra
+IN|MN|Manipur
+IN|ML|Meghalaya
+IN|MZ|Mizoram
+IN|NL|Nagaland
+IN|OR|Odisha
+IN|PY|Puducherry
+IN|PB|Punjab
+IN|RJ|Rajasthan
+IN|SK|Sikkim
+IN|TN|Tamil Nadu
+IN|TG|Telangana
+IN|TR|Tripura
+IN|UP|Uttar Pradesh
+IN|UT|Uttarakhand
+IN|WB|West Bengal
+JP|23|Aichi
+JP|05|Akita
+JP|02|Aomori
+JP|38|Ehime
+JP|21|Gifu
+JP|10|Gunma
+JP|34|Hiroshima
+JP|01|Hokkaido
+JP|18|Fukui
+JP|40|Fukuoka
+JP|07|Fukushima
+JP|28|Hyogo
+JP|08|Ibaraki
+JP|17|Ishikawa
+JP|03|Iwate
+JP|37|Kagawa
+JP|46|Kagoshima
+JP|14|Kanagawa
+JP|39|Kochi
+JP|43|Kumamoto
+JP|26|Kyoto
+JP|24|Mie
+JP|04|Miyagi
+JP|45|Miyazaki
+JP|20|Nagano
+JP|42|Nagasaki
+JP|29|Nara
+JP|15|Niigata
+JP|44|Oita
+JP|33|Okayama
+JP|47|Okinawa
+JP|27|Osaka
+JP|41|Saga
+JP|11|Saitama
+JP|25|Shiga
+JP|32|Shimane
+JP|22|Shizuoka
+JP|12|Chiba
+JP|09|Tochigi
+JP|36|Tokushima
+JP|13|Tokyo
+JP|31|Tottori
+JP|16|Toyama
+JP|30|Wakayama
+JP|06|Yamagata
+JP|35|Yamaguchi
+JP|19|Yamanashi
+SG|01|Central Singapore
+KR|KR-43|North Chungcheong
+KR|KR-44|South Chungcheong
+KR|KR-42|Gangwon
+KR|KR-41|Gyeonggi
+KR|KR-47|North Gyeongsang
+KR|KR-48|South Gyeongsang
+KR|KR-45|North Jeolla
+KR|KR-46|South Jeolla
+KR|KR-49|Jeju
+HK|HK|Hong KongBE|VAN|Antwerpen
+BE|VAN|Antwerpen				
+BE|VOV|Oost-Vlaanderen
+BE|VBR|Vlaams-Brabant
+BE|VLI|Limburg
+BE|VWV|West-Vlaanderen
+BE|WHT|Hainaut
+BE|WLG|Liège
+BE|WLX|Luxembourg
+BE|WNA|Namur
+BE|WBR|Brabant wallon
+BE|BBR|Brussels			   
+ID|IDN|Indonesia
+DK|84|Capital Region of Denmark
+DK|82|Central Denmark Region
+DK|81|North Denmark Region
+DK|85|Region Zealand
+DK|83|Region of Southern Denmark
+LU|CA|Capellen
+LU|CL|Clervaux
+LU|DI|Diekirch
+LU|EC|Echternach
+LU|ES|Esch-sur-Alzette
+LU|GR|Grevenmacher
+LU|LU|Luxembourg
+LU|ME|Mersch
+LU|RD|Redange
+LU|RM|Remich
+LU|VD|Vianden
+LU|WI|Wiltz
+TH|TH|Thailand
+MY|NEGERI SEMBILAN|NEGERI SEMBILAN 
+MY|MELAKA|MELAKA
+MY|KELANTAN|KELANTAN
+MY|SARAWAK|SARAWAK
+MY|PENANG|PENANG
+MY|PERAK|PERAK
+MY|KEDAH|KEDAH
+MY|PAHANG|PAHANG
+MY|SABAH|SABAH
+MY|JOHOR|JOHOR
+MY|SELANGOR|SELANGOR
+MY|TERENGGANU|TERENGGANU
+MY|PUTRAJAYA|PUTRAJAYA
+MY|PETALING JAYA|PETALING JAYA
+MY|WILAYAH PERSEKUTUAN|WILAYAH PERSEKUTUAN
+ZA|Western Cape|Western Cape
+ZA|Gauteng|Gauteng
+ZA|Limpopo|Limpopo
+ZA|Polokwane|Polokwane
+ZA|KZN|KZN
+ZA|ZKN|ZKN
+ZA|Orange Free State|Orange Free State
+PK|PAK|Pakistan
+CZ|10|Prague
+CZ|11|Prague
+CZ|20|Central Bohemian Region
+CZ|31|South Bohemian Region
+CZ|32|Plzeň Region
+CZ|41|Karlovy Vary Region
+CZ|42|Ústí nad Labem Region
+CZ|51|Liberec Region
+CZ|52|Hradec Králové Region
+CZ|53|Pardubice Region
+CZ|63|Vysočina Region
+CZ|64|South Moravian Region
+CZ|71|Olomouc Region
+CZ|72|Zlín Region
+CZ|80|Moravian-Silesian Region
+CH|ZH|Zürich 
+CH|BE|Bern 
+CH|LU|Luzern
+CH|UR|Uri 
+CH|SZ|Schwyz 
+CH|OW|Obwalden
+CH|NW|Nidwalden
+CH|GL|Glarus 
+CH|ZG|Zug 
+CH|FR|Fribourg 
+CH|SO|Solothurn 
+CH|BS|Basel-Stadt
+CH|BL|Basel-Landschaft
+CH|SH|Schaffhausen 
+CH|AR|Appenzell Ausserrhoden
+CH|AI|Appenzell Innerrhoden
+CH|SG|St. Gallen
+CH|GR|Grisons 
+CH|AG|Aargau 
+CH|TG|Thurgau 
+CH|TI|Ticino 
+CH|VD|Vaud 
+CH|VS|Valais 
+CH|NE|Neuchâtel 
+CH|GE|Geneva 
+CH|JU|Jura
+HU|BU|Budapest
+HU|BK|Bács|Kiskun	
+HU|BA|Baranya	
+HU|BE|Békés	
+HU|BZ|Borsod|Abaúj|Zemplén	
+HU|CS|Csongrád|Csanád	
+HU|FE|Fejér	
+HU|GS|Győr|Moson|Sopron	
+HU|HB|Hajdú|Bihar	
+HU|HE|Heves	
+HU|JN|Jász|Nagykun|Szolnok	
+HU|KE|Komárom|Esztergom	
+HU|NO|Nógrád	
+HU|PE|Pest	
+HU|SO|Somogy	
+HU|SZ|Szabolcs|Szatmár|Bereg	
+HU|TO|Tolna	
+HU|VA|Vas	
+HU|VE|Veszprém	
+HU|ZA|Zala	
+HU|BC|Békéscsaba	
+HU|DE|Debrecen	
+HU|DU|Dunaújváros	
+HU|EG|Eger	
+HU|ER|Érd	
+HU|GY|Győr	
+HU|HV|Hódmezővásárhely	
+HU|KV|Kaposvár	
+HU|KM|Kecskemét	
+HU|MI|Miskolc	
+HU|NK|Nagykanizsa	
+HU|NY|Nyíregyháza	
+HU|PS|Pécs	
+HU|ST|Salgótarján	
+HU|SN|Sopron	
+HU|SD|Szeged	
+HU|SF|Székesfehérvár	
+HU|SS|Szekszárd	
+HU|SK|Szolnok	
+HU|SH|Szombathely	
+HU|TB|Tatabánya	
+HU|VM|Veszprém	
+HU|ZE|Zalaegerszeg
+MT|San Ġwann|San Ġwann
+MT|Victoria|Victoria
+MT|St. Paul's Bay|St. Paul's Bay
+MT|Valletta|Valletta
+MT|Qormi|Qormi
+RO|AB|Alba
+RO|AR|Arad
+RO|AG|Arges
+RO|BC|Bacau
+RO|BH|Bihor
+RO|BN|Bistrita-Nasaud
+RO|BT|Botosani
+RO|BV|Brasov
+RO|BR|Braila
+RO|B|Bucuresti
+RO|BZ|Buzau
+RO|CS|Caras Severin
+RO|CJ|Cluj
+RO|CT|Constanta
+RO|CV|Covasna
+RO|DB|Dambovita
+RO|DJ|Dolj
+RO|GL|Galati
+RO|GR|Giurgiu
+RO|GJ|Gorj
+RO|HG|Harghita
+RO|HD|Hunedoara
+RO|IL|Ialomita
+RO|IS|Iasi
+RO|IF|Ilfov
+RO|MM|Maramures
+RO|MH|Mehedinti
+RO|MS|Mures
+RO|NT|Neamt
+RO|OT|Olt
+RO|PH|Prahova
+RO|SM|Satu Mare
+RO|SJ|Salaj
+RO|SB|Sibiu
+RO|SV|Suceava
+RO|TR|Teleorman
+RO|TM|Timis
+RO|TL|Tulcea
+RO|VS|Vaslui
+RO|VL|Valcea
+RO|VN|Vrancea

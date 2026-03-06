@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: custom-pre.xml 444 2020-07-10 01:26:03Z dtvdomain\skaila $ -->
+<!-- $URL: https://dtvsource/remote-svn/cst_template/branches/7.0.1/pos/installx/pos/custom-pre.xml $ -->
+<project name="custom pre-install tasks" default="run-tasks-pre" basedir=".">
+
+	<!-- ========================================================= -->  
+	<echo message="File Loading start "/>    
+    <property file="${basedir}/custom/ant.upgrade.properties" prefix="upgradeprop" />
+	<property file="${install.dir}/xstore.properties" prefix="xstp" />
+
+	<echo message="File Loading end"/> 	
+	<!-- ========================================================= -->  
+    
+	<target name="run-tasks-pre" description="Master target that calls other targets in order.">
+		<property environment="env" />
+		<echoproperties />
+		<antcall target="lev-run-permission-script" /><!-- XA-1657 Global  Merging Autologon and permission script -->
+		<antcall target="run-custom-pre-targets" />
+		<!-- XA-994 -->
+		<if>
+			<and>
+				<equals arg1="update" arg2="${install.type}" casesensitive="false" trim="true" />
+				<equals arg1="${xstp.dtv.location.CountryId}" arg2="DE"  casesensitive="false" trim="true" />
+			</and>
+			<then>
+				<antcall target="lev-update-property-for-germany"/>
+			</then>
+		</if>
+	</target>
+	
+	<target name="run-custom-pre-targets" description="Install Country Specific Data Scripts">
+			<echo message="... Begining Step 1 - Custom-pre file To update the base-xstore.properties file with new Salt id and encryptions" />
+			<echo message="... install.type=${install.type}" />			
+			<if>
+				<equals arg1="upgrade" arg2="${install.type}" casesensitive="false" trim="true" />
+				<then>
+					<antcall target="update-cust-id"/>
+				</then>
+			</if>
+		</target>
+	
+	
+	<!-- STEP 1, KICKOFF UPDATE BASE-XSTORE.PROPRTIES FILE--> 
+	<target name="update-cust-id" description="Update the base-xstore.properties file with new Salt id and encryptions">
+		<echo message="... Begining Step 1 - Runing the Custom-pre file To update the base-xstore.properties file with new Salt id and encryptions" />
+		<echo message="... Just Before editing the base-xstore file" />	
+		<!-- Updated as per v21 base-xstore.prop not require after upgrade -->
+		<!--<propertyfile file="${install.dir}/updates/base-xstore.properties">-->
+		<propertyfile file="${install.dir}/updates/base-xstore.upgrade.properties">
+
+			<!-- Updated as per v21 base-xstore.prop not require after upgrade -->
+
+			<!-- <echo message="... Updating Salt Id from ant.upgrade.properties file to base-xstore.properties file"  />	-->
+		    <entry key="dtv.CustomerId.salt" value="${upgradeprop.customerId.salt}"/>
+			
+			<!-- <echo message="... Updating storeprimary DB credentails from ant.upgrade.properties file to base-xstore.properties file"  /> -->
+			<entry key="storeprimary.db.user" value="${upgradeprop.storeprimary.db.user}" />
+			<entry key="storeprimary.db.pwd" value="${upgradeprop.storeprimary.db.pwd}"/>
+			
+			<!-- <echo message="... Updating local DB credentails from ant.upgrade.properties file to base-xstore.properties file" /> -->
+			<entry key="local.db.user" value="${upgradeprop.local.db.user}"/>  
+			<entry key="local.db.pwd" value="${upgradeprop.local.db.pwd}"/>	
+			
+			<!-- <echo message="... Updating master DB credentails from ant.upgrade.properties file to base-xstore.properties file"  /> -->
+			<entry key="master.db.user" value="${upgradeprop.master.db.user}" />
+			<entry key="master.db.pwd" value="${upgradeprop.master.db.pwd}"/>
+			
+			<!-- <echo message="... Updating owner DB credentails from ant.upgrade.properties file to base-xstore.properties file"  /> -->
+			<entry key="owner.db.user" value="${upgradeprop.owner.db.user}"/>
+			<entry key="owner.db.pwd" value="${upgradeprop.owner.db.pwd}" />
+			
+			<!-- <echo message="... Updating replication DB credentails from ant.upgrade.properties file to base-xstore.properties file"  /> -->
+			<entry key="repl.db.user" value="${upgradeprop.repl.db.user}" />
+			<entry key="repl.db.pwd" value="${upgradeprop.repl.db.pwd}" />
+			
+			<!-- <echo message="... Updating training DB credentails from ant.upgrade.properties file to base-xstore.properties file"  /> -->
+			<entry key="training.db.user" value="${upgradeprop.training.db.user}" />
+			<entry key="training.db.pwd" value="${upgradeprop.training.db.pwd}" />
+			
+			<!-- <echo message="... Updating global extensions config path from ant.upgrade.properties file to base-xstore.properties file"   /> -->
+			<!--<entry key="xstore.config.path.global.extensions" value="${upgradeprop.xstore.config.path.global.extensions}" />-->
+			
+			<!-- <echo message="... Updating relate auth password from ant.upgrade.properties file to base-xstore.properties file"   /> -->
+			<entry key="dtv.relate.Auth" value="${upgradeprop.relate.Auth}" />			
+			<entry key="xstore.location.mobile.workstationId.range.start" value="101"/>
+			<entry key="xstore.location.mobile.workstationId.range.end" default="150"/>
+           </propertyfile>
+		    
+		    <!--Changes for mobile range-Start-->
+		         <echo>***updating mobile properties***</echo>
+		    <propertyfile file="${install.dir}/updates/base-xstore.properties">
+		    <entry key="xstore.location.mobile.workstationId.range.start" value="101"/>
+		    <entry key="xstore.location.mobile.workstationId.range.end" default="199"/>
+		    </propertyfile>
+		<!--Changes for mobile range-End-->
+		
+		<echo message="... Just After editing the base-xstore file...Plz check" />	
+	</target>
+	
+	<!-- XA-994 -->
+	<target name="lev-update-property-for-germany" description="Update Germany specific property in xstore propertiels file">	
+		<trycatch property="lev-check-base-xstore-upgrade-prop-file" reference="error-ref">
+			<try>
+				<property url="jar:file:${basedir}/xstore-pos-pos.zip!/updates/base-xstore.upgrade.properties"/>
+			</try>
+			<catch>
+				<echo message="WARNING:File base-xstore.upgrade.properties  is not found in installer xstore-pos-pos.zip folder."/>
+			</catch> 
+		</trycatch>
+	
+		<trycatch property="lev-check-xstore-upgrade-prop-file" reference="error-ref">
+			<try>
+				<property url="jar:file:${basedir}/xstore-pos-pos.zip!/updates/xstore.upgrade.properties"/>
+			</try>
+			<catch>
+				<echo message="WARNING:File xstore.upgrade.properties is not found in installer xstore-pos-pos.zip folder."/>
+			</catch> 
+		</trycatch>
+
+	    <condition property="updatePropertiesForDE">
+			<and>
+				<containsproperty propertyfile="${install.dir}/xstore.properties" propertyname="lev.restart.batchfile" />
+				<or>
+					<isset property="lev-check-base-xstore-upgrade-prop-file" />
+					<isset property="lev-check-xstore-upgrade-prop-file" />
+				</or>
+			</and>
+		</condition>
+
+		<if>
+		  <isset property="updatePropertiesForDE"/>
+		  <then>
+		   	<echo message="Updating property lev.restart.batchfile for ${xstp.dtv.location.CountryId} " />
+			<propertyfile file="${install.dir}/xstore.properties">
+				<entry key="lev.restart.batchfile" value="C:\Users\Public\Desktop\restartxstore.bat" />	
+			</propertyfile>
+		  </then>
+		</if>
+	
+	</target>
+	
+	<!-- XA-1487 : apply permission script to all folders after xadmin deployment -->	
+	<target name="lev-run-permission-script" description="Lev run permission script">
+		<if>
+            <or>
+              <contains string="${install.type}" substring="upgrade" />
+              <contains string="${install.type}" substring="update" />
+            </or>
+			<then>
+				<echo message="Running script to update permission to folder" />
+				<exec executable="${basedir}/custom/lev-custom/lev_automation.bat" spawn="false" >
+						<arg value="${basedir}/custom/lev-custom/pwshAdmin.ps1" />
+						<arg value="${basedir}/custom/lev-custom/UpdateFolderPermission.ps1" />				
+				</exec>
+			</then>
+		</if>
+  	</target>
+	
+	</project>

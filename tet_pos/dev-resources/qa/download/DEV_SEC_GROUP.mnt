@@ -1,0 +1,8 @@
+<Header target_org_node="*:*" deployment_name="SEC_GROUP" download_time="IMMEDIATE" apply_immediately="true" />
+INSERT|SEC_GROUP|EVERYONE|Everyone|1||*
+INSERT|SEC_GROUP|CASHIER|Cashier|2||*
+INSERT|SEC_GROUP|SUPERVISOR|Supervisor / Lead Cashier|3||*
+INSERT|SEC_GROUP|MANAGER|Manager|4||*
+INSERT|SEC_GROUP|COORPORATEUSER|Corporate User|5||*
+INSERT|SEC_GROUP|ADMIN|IT Support / Admin|6||*
+INSERT|SEC_GROUP|LEVEL-2-SUPPORT|L2 Support (external)|7||*
