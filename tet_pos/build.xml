@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="customer-xstore" default="generation" basedir=".">
   <!-- import the core script -->
-  <property name="core.project" location="${basedir}/../tet" />
-  <import file="${core.project}/core.xml"/>
+  <!--<property name="core.project" location="${basedir}/../tet" />
+  <import file="${core.project}/core.xml"/>-->
 
   <!-- set properties that are not overridden in properties file or from a call into this file -->
   <property name="jar.file" location="${basedir}/${build.customerId.lc}-pos.jar" />
