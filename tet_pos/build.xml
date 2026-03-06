@@ -5,9 +5,9 @@
   <import file="${core.project}/core.xml"/>-->
 
   <!-- set properties that are not overridden in properties file or from a call into this file -->
-  <property name="jar.file" location="${basedir}/${build.customerId.lc}-pos.jar" />
-  <property name="config.jar.file" location="${basedir}/${build.customerId.lc}-config.jar" />
-  <property name="zip.file" location="${build.customerId.lc}.zip" />
+  <property name="jar.file" location="${basedir}/tet-pos.jar" />
+  <property name="config.jar.file" location="${basedir}/tet-config.jar" />
+  <property name="zip.file" location="tet.zip" />
   <property name="config" location="${basedir}/config" />
   <property name="database" location="${basedir}/database" />
   <property name="dist" location="${basedir}/dist" />
@@ -143,7 +143,6 @@
       <file file="${xstore.properties.overlay}" />
     </copy>
     <copy todir="${dist}/xstore/lib">
-      <file file="${jar.file}" />
       <file file="${config.jar.file}" />
     </copy>
 
