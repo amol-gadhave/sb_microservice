@@ -29,8 +29,12 @@ pipeline {
       
   stage('Ant Make') {
       steps {
-        ant buildFile: 'tet/jenkins-build.xml',
-            targets: 'make'
+       // ant buildFile: 'tet/jenkins-build.xml',
+       //    targets: 'make'
+			
+			
+		bat 'ant -f tet\\jenkins-build.xml make'
+
       }
     }
     stage('Delinea: Token + Fetch Secret') {
