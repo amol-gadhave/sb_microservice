@@ -4,7 +4,7 @@ pipeline {
   
   
   parameters {
-    string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Branch to build')
+    string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'Branch to build')
   
   }
   
