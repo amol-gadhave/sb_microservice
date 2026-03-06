@@ -10,7 +10,7 @@ pipeline {
   
   tools {
     ant 'ANT_1.10'   // Jenkins → Manage Jenkins → Tools
-    jdk 'JDK_11'     // Optional, if Ant build needs Java
+    jdk 'JDK-11'     // Optional, if Ant build needs Java
   }
 
   stages {
