@@ -1,6 +1,0 @@
-INSERT|RETAIL_LOCATION|901|901|Retail Store Oslo|Retail Store Oslo|Hovedgate 111|||Oslo||0154|NO|22 22 22 22|||||Store 901 Manager||59.91191|10.747986||||||||en_US|NOK|||||||||FALSE|Deposit Bank|1234567890||||NO_LEGAL_ENTITY_TEST
-INSERT|RETAIL_LOCATION|911|911|Retail Store Istanbul|Retail Store Istanbul|Istiklal Caddesi 111|||Istanbul||34430|TR|22 22 22 22|||||Store 911 Manager||41.02371|29.14499||||||||en_US|TRY|||||||||FALSE|Deposit Bank|1234567890||||TR_LEGAL_ENTITY_TEST
-INSERT|RETAIL_LOCATION|921|921|Retail Store Bucharest|Retail Store Bucharest|Victoriei Street 4111|||Bucharest||010099|RO|22 22 22 22|||||Store 921 Manager||44.25561|26.062254||||||||en_US|RON|||123456||||||FALSE|Deposit Bank|1234567890||||RO_LEGAL_ENTITY_TEST
-INSERT|RETAIL_LOCATION|931|931|Retail Store Budapest|Retail Store Budapest|Váci utca 4111|||Budapest||1052|HU|22 22 22 22|||||Store 931 Manager||47.49146|19.05407||||||||en_US|HUF|||||||||FALSE|Deposit Bank|1234567890||||HU_LEGAL_ENTITY_TEST
-INSERT|RETAIL_LOCATION|941|941|Retail Store Athens|Retail Store Athens|Stadiou Street 4111|||Athens||10431|GR|22 22 22 22|||||Store 941 Manager||37.98037|23.73119||||||||en_US|EUR|||||||||FALSE|Deposit Bank|1234567890||||GR_LEGAL_ENTITY_TEST
-# File created: 2021-08-05 16:18 / Nr of records: 5

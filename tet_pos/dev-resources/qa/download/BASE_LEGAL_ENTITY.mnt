@@ -1,6 +1,0 @@
-INSERT|LEGAL_ENTITY|NO_LEGAL_ENTITY_TEST|ORACLE Norway|Olaf Helsets vei 6||||Oslo||||0694|NO|||||123456785MVA|123456785|||NO123456789||
-INSERT|LEGAL_ENTITY|TR_LEGAL_ENTITY_TEST|ORACLE Turkey|Istiklal Caddesi 999||||Istanbul||||34430|TR|||||||||||
-INSERT|LEGAL_ENTITY|RO_LEGAL_ENTITY_TEST|ORACLE Romania|Oracle Tower, corp B, et. 1-4|Calea Floreasca 169A|||București||||014254|RO|||||RO44067428|RO44067428|||||
-INSERT|LEGAL_ENTITY|HU_LEGAL_ENTITY_TEST|ORACLE Hungary Kft|Lechner Ödön fasor 7||||Budapest||||1095|HU|||||||||||
-INSERT|LEGAL_ENTITY|GR_LEGAL_ENTITY_TEST|ORACLE Hellas SMLLC|Leof. Mesogeion 265||||Neo Psichiko||||15451|GR|||||||||||
-# File created: 2021-08-05 16:19 / Nr of records: 5

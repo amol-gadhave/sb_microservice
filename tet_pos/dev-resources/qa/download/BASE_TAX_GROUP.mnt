@@ -1,3 +1,0 @@
-#The \u0020 in the description is to force the dataloader to store a space (hex 20) in the database
-INSERT|TAX_GROUP|FISH|Fish|\u0020|*|*|
-# File created: 2021-08-05 16:29 / Nr of records: 2

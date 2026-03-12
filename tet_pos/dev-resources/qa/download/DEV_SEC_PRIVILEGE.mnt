@@ -1,8 +1,0 @@
-<Header target_org_node="*:*" deployment_name="SEC_PRIVILEGE" download_time="IMMEDIATE" apply_immediately="true" />
-INSERT|SEC_PRIVILEGE|FISCAL_PRINTER_SET_DATE_TIME|0||BAA=|NO_PROMPT|0|BAA=|Who is allowed to authorize synchronization of fiscal printer date and time during fiscal day open?|1|*
-INSERT|SEC_PRIVILEGE|FISCAL_PRINTER_SET_VAT_RATES|0||BAA=|NO_PROMPT|0|BAA=|Who is allowed to authorize synchronization of vat rates during fiscal day open?|1|*
-INSERT|SEC_PRIVILEGE|FISCAL_PRINTER_STATUS|0||BAA=|NO_PROMPT|0|BAA=|Who is allowed to set fiscal printer status?|0|*
-INSERT|SEC_PRIVILEGE|PROGRAMMING_MODE_MENU|0||IAA=|NO_PROMPT|0|IAA=|Who is allowed to access the Programming Mode menu?|0|*
-INSERT|SEC_PRIVILEGE|FISCALIZATION_MENU|0||IAA=|NO_PROMPT|0|IAA=|Who is allowed to access the Fiscalization menu?|0|*
-INSERT|SEC_PRIVILEGE|FISCAL_REPORTS_MENU|0||BAA=|NO_PROMPT|0|BAA=|Who is allowed to access the Fiscal Reports menu?|0|*
-INSERT|SEC_PRIVILEGE|FISCAL_PRINTER_OUT_OF_ORDER|0||QAA=|NO_PROMPT|0|QAA=|Who is allowed to disconnect/connect the Fiscal Printer for initiating/finishing the out of order procedure?|0|*
