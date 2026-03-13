@@ -35,7 +35,7 @@ pipeline {
             passwordVariable: 'SS_PASSWORD'
           )
         ]) {
-          powershell(script: '''
+          powershell("""
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
             \$ProgressPreference = 'SilentlyContinue'
 
@@ -116,7 +116,7 @@ pipeline {
 				}
 			}
 			Write-Host " Done. Scanned: \$scanned file(s), Updated: \$changed file(s) under tet_pos\\\\updates."
-      ''')		
+      """		
         }
       }
     }
