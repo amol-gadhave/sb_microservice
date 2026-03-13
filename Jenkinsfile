@@ -106,7 +106,7 @@ pipeline {
                 $content = Get-Content -Path $f.FullName -Raw
 
                 if ($content -notmatch '@MULE_USER@' -and $content -notmatch '@MULE_PASSWORD@') {
-                  Write-Host ("ℹ️ Placeholders not present in: {0}" -f $f.FullName)
+                  Write-Host ("Placeholders not present in: {0}" -f $f.FullName)
                   continue
                 }
 
@@ -116,13 +116,13 @@ pipeline {
                 if ($updated -ne $content) {
                   Set-Content -Path $f.FullName -Value $updated -Encoding UTF8
                   $changed++
-                  Write-Host ("✅ Updated: {0}" -f $f.FullName)
+                  Write-Host ("Updated: {0}" -f $f.FullName)
                 } else {
-                  Write-Host ("ℹ️ No change after replacement: {0}" -f $f.FullName)
+                  Write-Host (" No change after replacement: {0}" -f $f.FullName)
                 }
               }
 
-              Write-Host ("✅ Done. Scanned: {0} file(s), Updated: {1} file(s) under tet_pos\\updates." -f $scanned, $changed)
+              Write-Host (" Done. Scanned: {0} file(s), Updated: {1} file(s) under tet_pos\\updates." -f $scanned, $changed)
             ''')
           }
         }
