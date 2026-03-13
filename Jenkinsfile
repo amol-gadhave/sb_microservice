@@ -80,11 +80,11 @@ pipeline {
 
               # --- 3) Extract Mule username + password (v2-style) ---
               # If your field names differ, adjust 'Username'/'Password' accordingly.
-              $muleUser = ($secret.items | Where-Object { $_.fieldName -eq 'Username' } | Select-Object -First 1).value
-              $mulePwd  = ($secret.items | Where-Object { $_.fieldName -eq 'Password' } | Select-Object -First 1).value
+              $muleUser = ($secret.items | Where-Object { $_.fieldName -eq 'username' } | Select-Object -First 1).value
+              $mulePwd  = ($secret.items | Where-Object { $_.fieldName -eq 'password' } | Select-Object -First 1).value
 
-              if (-not $muleUser) { throw "Secret retrieved but no 'Username' field found (check Delinea template field names)." }
-              if (-not $mulePwd)  { throw "Secret retrieved but no 'Password' field found (check Delinea template field names)." }
+              if (-not $muleUser) { throw "Secret retrieved but no 'username' field found (check Delinea template field names)." }
+              if (-not $mulePwd)  { throw "Secret retrieved but no 'password' field found (check Delinea template field names)." }
 
               # --- 4) Replace placeholders in multiple properties files ---
               $rootDir = Join-Path $env:WORKSPACE 'tet_pos\\updates'
