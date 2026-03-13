@@ -67,7 +67,7 @@ stage('Inject Mule credentials from Delinea into ALL .properties') {
         $secretId = '${params.DELINEA_SECRET_ID}'
         $secret = Invoke-RestMethod `
           -Method Get `
-          -Uri ("https://levisafe.secretservercloud.com/api/v1/secrets/{0}" -f $secretId) `
+          -Uri ("https://levisafe.secretservercloud.com/api/v2/secrets/{0}" -f $secretId) `
           -Headers $headers
 
         # --- 3) Extract Mule username + password from secret fields ---
