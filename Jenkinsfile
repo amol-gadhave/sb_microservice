@@ -118,7 +118,8 @@ pipeline {
 				Write-Host ("ℹ️ No change after replacement: {0}" -f $f.FullName)
 				}
 			}
-
+			Write-Host "✅ Done. Scanned: \$scanned file(s), Updated: \$changed file(s) under tet_pos\\\\updates."
+      """		
         }
       }
     }
