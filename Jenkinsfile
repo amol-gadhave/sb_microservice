@@ -80,9 +80,6 @@ pipeline {
            
 
 			#--- 4) Replace placeholders in multiple properties files ---
-			# powershell('''
-			$ErrorActionPreference = 'Stop'
-			
 			$rootDir = Join-Path $env:WORKSPACE 'tet_pos\\updates'
 			if (-not (Test-Path $rootDir)) {
 				throw ("Properties folder not found at: {0}" -f $rootDir)
