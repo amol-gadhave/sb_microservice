@@ -77,24 +77,46 @@ pipeline {
             if (-not \$muleUser) { throw "Secret retrieved but no 'username' field found (check template field slugs)." }
             if (-not \$mulePwd)  { throw "Secret retrieved but no 'password' field found (check template field slugs)." }
 
-            # --- 4) Replace placeholders in properties file ---
-            \$propPath = Join-Path \$env:WORKSPACE "tet_pos\\updates\\xstore_AT.properties"
-            if (-not (Test-Path \$propPath)) {
-              throw "Properties file not found at: \$propPath"
-            }
+           
+			# --- 4) Replace placeholders in multiple properties files ---
+			$rootDir = Join-Path $env:WORKSPACE "tet_pos\\updates"
+			if (-not (Test-Path $rootDir)) {
+			throw "Properties folder not found at: $rootDir"
+			}
+			
+			# Find all .properties recursively
+			$files = Get-ChildItem -Path $rootDir -Recurse -Filter "*.properties" -File
+			if (-not $files -or $files.Count -eq 0) {
+			throw "No .properties files found under: $rootDir"
+			}
+			
+			$scanned = 0
+			$changed = 0
+			
+			foreach ($f in $files) {
+			$scanned++
+			
+			$content = Get-Content -Path $f.FullName -Raw
+			
+			if ($content -notmatch "@MULE_USER@" -and $content -notmatch "@MULE_PASSWORD@") {
+				Write-Host "ℹ️ Placeholders not present in: $($f.FullName)"
+				continue
+			}
+			
+			# Use string Replace (NOT regex) to safely handle special characters in password
+			$updated = $content.Replace("@MULE_USER@", $muleUser).Replace("@MULE_PASSWORD@", $mulePwd)
+			
+			if ($updated -ne $content) {
+				Set-Content -Path $f.FullName -Value $updated -Encoding UTF8
+				$changed++
+				Write-Host "✅ Updated: $($f.FullName)"
+			} else {
+				Write-Host "ℹ️ No change after replacement: $($f.FullName)"
+			}
+			}
+			
+			Write-Host ("✅ Done. Scanned: {0} file(s), Updated: {1} file(s) under tet_pos\\updates." -f $scanned, $changed)
 
-            \$content = Get-Content \$propPath -Raw
-
-            if (\$content -notmatch "@MULE_USER@" -or \$content -notmatch "@MULE_PASSWORD@") {
-              Write-Host "Warning: One or both placeholders not found in file. Proceeding to replace if present."
-            }
-
-            # Use string Replace (NOT regex) to safely handle special characters in password
-            \$content = \$content.Replace("@MULE_USER@", \$muleUser).Replace("@MULE_PASSWORD@", \$mulePwd)
-
-            Set-Content -Path \$propPath -Value \$content -NoNewline
-
-            Write-Host "✅ Injected Mule credentials into tet_pos\\updates\\xstore_AT.properties (placeholders replaced)."
           """
         }
       }
