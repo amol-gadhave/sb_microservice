@@ -80,7 +80,7 @@ pipeline {
            
 
 			#--- 4) Replace placeholders in multiple properties files ---
-			powershell('''
+			# powershell('''
 			$ErrorActionPreference = 'Stop'
 			
 			$rootDir = Join-Path $env:WORKSPACE 'tet_pos\\updates'
