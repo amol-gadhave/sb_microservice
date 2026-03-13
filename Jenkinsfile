@@ -78,46 +78,50 @@ pipeline {
             if (-not \$mulePwd)  { throw "Secret retrieved but no 'password' field found (check template field slugs)." }
 
            
-			# --- 4) Replace placeholders in multiple properties files ---
-			$rootDir = Join-Path $env:WORKSPACE "tet_pos\\updates"
+
+			// --- 4) Replace placeholders in multiple properties files ---
+			powershell('''
+			$ErrorActionPreference = 'Stop'
+			
+			$rootDir = Join-Path $env:WORKSPACE 'tet_pos\\updates'
 			if (-not (Test-Path $rootDir)) {
-			throw "Properties folder not found at: $rootDir"
+				throw ("Properties folder not found at: {0}" -f $rootDir)
 			}
 			
-			# Find all .properties recursively
-			$files = Get-ChildItem -Path $rootDir -Recurse -Filter "*.properties" -File
+			$files = Get-ChildItem -Path $rootDir -Recurse -Filter '*.properties' -File
 			if (-not $files -or $files.Count -eq 0) {
-			throw "No .properties files found under: $rootDir"
+				throw ("No .properties files found under: {0}" -f $rootDir)
 			}
 			
 			$scanned = 0
 			$changed = 0
 			
 			foreach ($f in $files) {
-			$scanned++
+				$scanned++
 			
-			$content = Get-Content -Path $f.FullName -Raw
+				$content = Get-Content -Path $f.FullName -Raw
 			
-			if ($content -notmatch "@MULE_USER@" -and $content -notmatch "@MULE_PASSWORD@") {
-				Write-Host "ℹ️ Placeholders not present in: $($f.FullName)"
+				# If neither placeholder exists, skip (no error)
+				if ($content -notmatch '@MULE_USER@' -and $content -notmatch '@MULE_PASSWORD@') {
+				Write-Host ("ℹ️ Placeholders not present in: {0}" -f $f.FullName)
 				continue
-			}
+				}
 			
-			# Use string Replace (NOT regex) to safely handle special characters in password
-			$updated = $content.Replace("@MULE_USER@", $muleUser).Replace("@MULE_PASSWORD@", $mulePwd)
+				# Literal replace (NOT regex) => safe for special chars in passwords
+				$updated = $content.Replace('@MULE_USER@', $muleUser).Replace('@MULE_PASSWORD@', $mulePwd)
 			
-			if ($updated -ne $content) {
+				if ($updated -ne $content) {
 				Set-Content -Path $f.FullName -Value $updated -Encoding UTF8
 				$changed++
-				Write-Host "✅ Updated: $($f.FullName)"
-			} else {
-				Write-Host "ℹ️ No change after replacement: $($f.FullName)"
-			}
+				Write-Host ("✅ Updated: {0}" -f $f.FullName)
+				} else {
+				Write-Host ("ℹ️ No change after replacement: {0}" -f $f.FullName)
+				}
 			}
 			
 			Write-Host ("✅ Done. Scanned: {0} file(s), Updated: {1} file(s) under tet_pos\\updates." -f $scanned, $changed)
+			''')
 
-          """
         }
       }
     }
