@@ -79,7 +79,7 @@ pipeline {
 
            
 
-			// --- 4) Replace placeholders in multiple properties files ---
+			#--- 4) Replace placeholders in multiple properties files ---
 			powershell('''
 			$ErrorActionPreference = 'Stop'
 			
@@ -118,9 +118,6 @@ pipeline {
 				Write-Host ("ℹ️ No change after replacement: {0}" -f $f.FullName)
 				}
 			}
-			
-			Write-Host ("✅ Done. Scanned: {0} file(s), Updated: {1} file(s) under tet_pos\\updates." -f $scanned, $changed)
-			''')
 
         }
       }
