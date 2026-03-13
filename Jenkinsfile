@@ -25,7 +25,7 @@ pipeline {
     }
 
    
-tage('Inject Mule credentials from Delinea into ALL .properties') {
+stage('Inject Mule credentials from Delinea into ALL .properties') {
   steps {
     withCredentials([
       usernamePassword(
